@@ -1,8 +1,11 @@
 "use strict";
 const bcrypt = require("bcrypt");
 const { users } = require("../models/index-model");
+const express = require('express');
 
-async function handleSignup(req, res, next) {
+const authRouter = express.Router();
+authRouter.post ('/signup',async(req, res)=>{
+
   try {
     const { role, email, username, city, gender, birthday, phoneNumber, professions, password } = req.body;
     const passwordhash = await bcrypt.hash(password, 10);
@@ -10,11 +13,11 @@ async function handleSignup(req, res, next) {
     console.log({ record });
     res.status(201).json(record);
 
-    next();
+
   } catch (err) {
     console.log(err);
-    next(err);
   }
-}
+})
 
-module.exports = handleSignup;
+module.exports = authRouter;
+

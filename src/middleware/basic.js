@@ -1,7 +1,7 @@
 'use strict';
 
 const base64 = require('base-64');
-const { users } = require('../models');
+const { users } = require('../models/index-model');
 // const bearer = require('./bearer')
 
 module.exports = async (req, res, next) => {

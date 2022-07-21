@@ -1,5 +1,5 @@
 'use strict';
-require("dotenv").config()
+// require("dotenv").config()
 // Start up DB Server
 const { db } = require('./src/models/index-model');
 db.sync()
