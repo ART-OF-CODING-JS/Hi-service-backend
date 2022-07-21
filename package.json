@@ -25,7 +25,7 @@
   "homepage": "https://github.com/ART-OF-CODING-JS/Hi-service#readme",
   "dependencies": {
     "base-64": "^1.0.0",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
