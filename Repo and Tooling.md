@@ -20,3 +20,10 @@ Like car washing station we can add fixed location for these station.
 •    So on our sign up route you can choose to sign up as normal user that looking for profession or service:
 •    And the service or profession provider can sign up as different role
 •    So we will use basic Auth. and bearer Auth., and ACL .
+
+
+## Tooling 
+
+* We will try to plan our project using different tooling like github 
+
+![link](./image/Screenshot%20(443).png) 
