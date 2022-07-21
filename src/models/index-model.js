@@ -1,6 +1,8 @@
 'use strict';
 
-require('dotenv').config();
+require("dotenv").config()
+
+
 const { Sequelize, DataTypes } = require('sequelize');
 
 // Tables
