@@ -41,9 +41,6 @@ routerV2.get('/:model/:id',bearer,acl('read'),  handleGetOne);
 routerV2.put('/:model/:id', bearer, handleUpdate);
 routerV2.delete('/:model/:id',bearer,  handleDelete);
 
-
-
-
  // Get All Records
 // just admin can get all users
 async function handleGetAll(req, res) {
@@ -56,7 +53,6 @@ async function handleGetAll(req, res) {
     res.send('Access denied')
   }
 };
-
 
  // Get one Records
  // admin just can get one user
@@ -82,8 +78,6 @@ async function handleCreate(req, res) {
     res.status(404).send('Access denied')
   }
 }
-
-
 
 // Update records
 // user can update on his service or... but not allow edit on service users.
