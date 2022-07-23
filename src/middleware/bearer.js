@@ -2,9 +2,6 @@
 
 const { users } = require('../models/index-model');
 module.exports = async(req, res, next) => {
-  require('dotenv').config();
-
-
   try {
 
     if (!req.headers.authorization) { next('Invalid Login') }
