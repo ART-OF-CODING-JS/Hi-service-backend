@@ -61,7 +61,7 @@ async function updatePassword(req, res, next) {
 
         next();
       } else {
-        res.status(404).send("Tha old password it's correct !");
+        res.status(404).send("Tha old password it's not correct !");
       }
     } else {
       res.status(404).send("Access denied!");
