@@ -25,7 +25,7 @@ routerV2.put('/resetpassword',resetpassword)
 // models
 routerV2.param('model', (req, res, next) => {
   const modelName = req.params.model;
-  if (dataModules[modelName] ) {
+  if (dataModules[modelName] && dataModules[modelName]!==dataModules.service) {
     req.model = dataModules[modelName];
     next();
   } else {
@@ -41,14 +41,10 @@ routerV2.get('/:model/:id',bearer,acl('read'),  handleGetOne);
 routerV2.put('/:model/:id', bearer, handleUpdate);
 routerV2.delete('/:model/:id',bearer,  handleDelete);
 
-
-
-
  // Get All Records
 // just admin can get all users
 async function handleGetAll(req, res) {
   // const knexInstance = req.app.get("db");
-
   if((req.user.role === 'admin') ||( req.model !== dataModules.users )){
     let allRecords = await req.model.findAll();
     res.status(200).json(allRecords);
@@ -56,7 +52,6 @@ async function handleGetAll(req, res) {
     res.send('Access denied')
   }
 };
-
 
  // Get one Records
  // admin just can get one user
@@ -66,7 +61,7 @@ async function handleGetOne(req, res) {
  let readOne = await req.model.findOne({where:{id:id}});
  res.status(200).json(readOne);
 }else{
-  res.send('Access denied')
+  res.send('You are not allowed to do this action , admin only')
 }
 }
 
@@ -95,7 +90,7 @@ async function handleUpdate(req, res) {
   const tokenId = req.user.id;
   const role = req.user.role;
   const newUpdate= req.body
-
+// when admin update user the password it's not hashed
   let ID = req.params.id;
     const found = await  req.model.findOne({where:{id:ID}}) 
   if( (req.user.role === 'admin') ||( req.model !== dataModules.users )){
@@ -120,7 +115,7 @@ async function handleDelete(req, res) {
   const tokenId = req.user.id;
   const role = req.user.role;
   const ID = req.params.id
-// when admin update user the password it's not hashed
+
 try{
   if( (role === 'admin') ||( req.model !== dataModules.users ) ){
   const foundUser = await req.model.findOne({where:{id:ID}})

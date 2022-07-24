@@ -3,15 +3,12 @@
 const bcrypt = require("bcrypt");
 const {users} = require('../models/index-model');
  
-
-
-
 // in login page there is a button call (forget my password) to reset password .
  async function resetpassword(req,res,next){
 
 const {username,newPassword,email} = req.body;
 try{
-    const foundUser = await  users.findOne({where:{username:username}})
+    const foundUser =users.findOne({where:{username:username}})
    
 if(foundUser){
     if(email === foundUser.email){

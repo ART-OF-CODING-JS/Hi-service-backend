@@ -8,7 +8,7 @@ const bearer = require('../middleware/bearer')
 
 //***Routers***
 
-router.post('/addCredit',bearer,handelAddCredit)
+router.post('/addCredit',handelAddCredit)
 router.post('/payment',bearer,handelPayment)
 
 
@@ -17,8 +17,8 @@ router.post('/payment',bearer,handelPayment)
 async function handelAddCredit(req,res){
 try{
     const obj = req.body;
-    const add = await dataModules.payment.create(obj)
-    res.status(201).json(add);
+    const add = await model.payment.create(obj)
+  res.status(201).json(add);
 }catch(err){
     console.log(err);
 }

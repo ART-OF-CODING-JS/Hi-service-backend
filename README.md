@@ -2,7 +2,7 @@
 
 ## Begin Wireframes
 
-* we prepare simple wirefram for our app , from the main page untile the user settings , all shown below
+* we prepare simple wirefram for our app , from the main page until the user settings , all shown below
 
 ![link](./image/1.jpeg)
 
@@ -44,7 +44,7 @@
 ![link](./image/WhatsApp%20Image%202022-07-21%20at%2012.11.38%20PM.jpeg)
 
 * we created 3 tables , as start
-  * main table for the users , it will contain username , password , role , Email, and  it will have realtion to other all table
+  * main table for the users , it will contain username , password , role , Email, and  it will have relation to other all table
 
   * 2nd table will be for the services , we will save all type of services in this table , nameProfession , image , description, city or location , phone number , userId
     * it will be **many services to one user**

@@ -7,6 +7,6 @@ module.exports=(action)=>(req,res,next)=>{
             next('access denied')
         }
     } catch (e) {
-
+         
     }
 }
