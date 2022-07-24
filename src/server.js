@@ -19,6 +19,9 @@ const login = require('./routers/login');
 const signup = require('./routers/signup');
 const Search=require("./routers/searchbyname")
 const routerV2=require('./routers/api')
+ const paymentRouter = require('./routers/payment')
+ const services = require('./routers/services')
+//  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
 const app = express();
@@ -73,6 +76,8 @@ app.get('/auth/facebook/home',
     // Successful authentication, redirect home.
     res.redirect('/');
   });
+
+
 // App Level MW
 app.use(cors());
 app.use(morgan('dev'));
@@ -88,10 +93,15 @@ app.get("/login",(req,res)=>{
 app.get("/home",(req,res)=>{
     res.send("welcome to my secret page")
 })
+
+
 // Routes
 app.use('/search',Search)
 app.use('/users',signup);
 app.use('/users',login);
+app.use(paymentRouter)
+app.use(services)
+// app.use(searchBar)
 // // app.use('/users',authRoutes);
 app.use('/api/v2',routerV2);
 // // Catchalls

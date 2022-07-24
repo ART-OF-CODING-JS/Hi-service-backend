@@ -25,7 +25,7 @@ routerV2.put('/resetpassword',resetpassword)
 // models
 routerV2.param('model', (req, res, next) => {
   const modelName = req.params.model;
-  if (dataModules[modelName] ) {
+  if (dataModules[modelName] && dataModules[modelName]!==dataModules.service) {
     req.model = dataModules[modelName];
     next();
   } else {
@@ -34,7 +34,7 @@ routerV2.param('model', (req, res, next) => {
 });
 
 
-// Before/:model >>>>> /api/v2/model
+// Before/:model >>>>> /api/v2/:model
 routerV2.get('/:model',bearer,acl('read'), handleGetAll); 
 routerV2.get('/:model/:id',bearer,acl('read'),  handleGetOne); 
  routerV2.post('/:model',bearer,  handleCreate); 
@@ -45,7 +45,6 @@ routerV2.delete('/:model/:id',bearer,  handleDelete);
 // just admin can get all users
 async function handleGetAll(req, res) {
   // const knexInstance = req.app.get("db");
-  
   if((req.user.role === 'admin') ||( req.model !== dataModules.users )){
     let allRecords = await req.model.findAll();
     res.status(200).json(allRecords);
@@ -69,8 +68,9 @@ async function handleGetOne(req, res) {
  // Create records
 
 async function handleCreate(req, res) {
+  const obj = req.body;
+
   if((req.user.role === 'admin') ||( req.model !== dataModules.users ) ){
-    const obj = req.body;
     let newRecord = await req.model.create(obj);
     res.status(201).json(newRecord);
 
@@ -79,6 +79,10 @@ async function handleCreate(req, res) {
   }
 }
 
+
+
+
+
 // Update records
 // user can update on his service or... but not allow edit on service users.
 // admin can edit on all of the services .....
@@ -86,13 +90,12 @@ async function handleUpdate(req, res) {
   const tokenId = req.user.id;
   const role = req.user.role;
   const newUpdate= req.body
-
+// when admin update user the password it's not hashed
   let ID = req.params.id;
     const found = await  req.model.findOne({where:{id:ID}}) 
   if( (req.user.role === 'admin') ||( req.model !== dataModules.users )){
 
-
-    if ((found && tokenId === found.userID ) || (role == "admin" && found)) {
+    if (( tokenId === found.userID ) || (role == "admin" && found)) {
        let updates = await found.update(newUpdate)
        res.status(201).json(updates)
     }else{
@@ -112,7 +115,7 @@ async function handleDelete(req, res) {
   const tokenId = req.user.id;
   const role = req.user.role;
   const ID = req.params.id
-// when admin update user the password it's not hashed
+
 try{
   if( (role === 'admin') ||( req.model !== dataModules.users ) ){
   const foundUser = await req.model.findOne({where:{id:ID}})

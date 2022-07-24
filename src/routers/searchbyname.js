@@ -4,7 +4,10 @@ const express = require('express');
 const bearer=require("../middleware/bearer")
 
 const searchRouter = express.Router();
-searchRouter.get('',bearer,async(req, res)=>{
+
+
+
+searchRouter.post('/byName',bearer,async(req, res)=>{
 
   try {
     const { searchTerm} = req.body;
