@@ -47,7 +47,7 @@ routerV2.delete('/:model/:id',bearer,  handleDelete);
  // Get All Records
 // just admin can get all users
 async function handleGetAll(req, res) {
-  const knexInstance = req.app.get("db");
+  // const knexInstance = req.app.get("db");
   
   if((req.user.role === 'admin') ||( req.model !== dataModules.users )){
     let allRecords = await req.model.findAll();
@@ -66,7 +66,7 @@ async function handleGetOne(req, res) {
  let readOne = await req.model.findOne({where:{id:id}});
  res.status(200).json(readOne);
 }else{
-  res.send('Access denied')
+  res.send('You are not allowed to do this action , admin only')
 }
 }
 

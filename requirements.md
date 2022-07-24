@@ -11,7 +11,7 @@ What pain point does this project solve?
 * the main point it will make your life easy , in one click you can find any service you want , at any time you want and can reach you at home 
 
 Why should we care about your product?
-* it is new idea , and it is helpfull for all 
+* it is new idea , and it is helpful for all 
 
 ### Scope (In/Out)
 
@@ -39,7 +39,7 @@ What will your MVP functionality be?
 
 ### Stretch
 What stretch goals are you going to aim for?
-* we will try to add chat between the user and srvice provider 
+* we will try to add chat between the user and service provider 
 * live location for all users 
 
 ## Functional Requirements
@@ -48,16 +48,16 @@ List the functionality of your product. This will consist of tasks such as the f
 * An admin can create and delete user accounts
 * A user can update their profile information
 * A user can search all type of services 
-* services provider can login as differnt role 
+* services provider can login as different role 
 * user can chat with the service provider 
 * the user can report for bad service to the admin 
-* the user can add any service to favourite
+* the user can add any service to favorite
 * the user can rate any service 
 
 
 ## Data Flow
 
-* this image will explane about our data flow 
+* this image will explain about our data flow 
 
 ![link](./image/WhatsApp%20Image%202022-07-20%20at%206.24.54%20PM.jpeg)
 
@@ -69,4 +69,4 @@ List the functionality of your product. This will consist of tasks such as the f
 
 * Capacity : we will save all user data in our database , so we will use online server to handle our increasing data 
 * Compatibility : we will try to make our app work in website and  mobile application
-* Usability : we will try to make our app easy to use , and user frindly 
+* Usability : we will try to make our app easy to use , and user friendly 
