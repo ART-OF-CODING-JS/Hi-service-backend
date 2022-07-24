@@ -34,7 +34,7 @@ routerV2.param('model', (req, res, next) => {
 });
 
 
-// Before/:model >>>>> /api/v2/model
+// Before/:model >>>>> /api/v2/:model
 routerV2.get('/:model',bearer,acl('read'), handleGetAll); 
 routerV2.get('/:model/:id',bearer,acl('read'),  handleGetOne); 
  routerV2.post('/:model',bearer,  handleCreate); 
@@ -47,8 +47,8 @@ routerV2.delete('/:model/:id',bearer,  handleDelete);
  // Get All Records
 // just admin can get all users
 async function handleGetAll(req, res) {
-  const knexInstance = req.app.get("db");
-  
+  // const knexInstance = req.app.get("db");
+
   if((req.user.role === 'admin') ||( req.model !== dataModules.users )){
     let allRecords = await req.model.findAll();
     res.status(200).json(allRecords);
@@ -73,8 +73,9 @@ async function handleGetOne(req, res) {
  // Create records
 
 async function handleCreate(req, res) {
+  const obj = req.body;
+
   if((req.user.role === 'admin') ||( req.model !== dataModules.users ) ){
-    const obj = req.body;
     let newRecord = await req.model.create(obj);
     res.status(201).json(newRecord);
 
@@ -82,6 +83,8 @@ async function handleCreate(req, res) {
     res.status(404).send('Access denied')
   }
 }
+
+
 
 
 
@@ -97,8 +100,7 @@ async function handleUpdate(req, res) {
     const found = await  req.model.findOne({where:{id:ID}}) 
   if( (req.user.role === 'admin') ||( req.model !== dataModules.users )){
 
-
-    if ((found && tokenId === found.userID ) || (role == "admin" && found)) {
+    if (( tokenId === found.userID ) || (role == "admin" && found)) {
        let updates = await found.update(newUpdate)
        res.status(201).json(updates)
     }else{

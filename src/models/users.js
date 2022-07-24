@@ -42,11 +42,14 @@ const userSchema = (sequelize, DataTypes) => {
        allowNull: true,
     },
    
-      Date: {
+     Date: {
         type: DataTypes.DATEONLY,
         defaultValue: DataTypes.NOW,
       },
-
+      didPay:{
+     type: DataTypes.BOOLEAN,
+     defaultValue: false
+    },
    
     role: {
       type: DataTypes.ENUM('admin', 'writer', 'editor', 'user'),

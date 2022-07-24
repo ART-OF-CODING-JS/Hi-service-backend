@@ -13,6 +13,9 @@ const notFound = require('./errorhandler/404');
 const login = require('./routers/login');
 const signup = require('./routers/signup');
 const routerV2=require('./routers/api')
+ const paymentRouter = require('./routers/payment')
+ const service = require('./routers/services')
+//  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
 const app = express();
@@ -29,6 +32,9 @@ app.get('/',(req,res)=>{
 // Routes
 app.use('/users',signup);
 app.use('/users',login);
+app.use(paymentRouter)
+app.use(service)
+// app.use(searchBar)
 // // app.use('/users',authRoutes);
 app.use('/api/v2',routerV2);
 // // Catchalls
