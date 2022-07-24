@@ -3,9 +3,6 @@
 const bcrypt = require("bcrypt");
 const {users} = require('../models/index-model');
  
-
-
-
 // in login page there is a button call (forget my password) to reset password .
  async function resetpassword(req,res,next){
 

@@ -10,9 +10,11 @@ module.exports = async (req, res, next) => {
     next()
      return _authError(); 
     };
-
+ // ['Basic', 'sdkjdsljd=']
+ // sdkjdsljd=
   let basic = req.headers.authorization.split(' ').pop();
-
+// "username:password" 
+// username, password
   let [username, pass] =base64.decode(basic).split(':');
   try {
     

@@ -21,10 +21,9 @@ Like car washing station we can add fixed location for these station.
 •    And the service or profession provider can sign up as different role
 •    So we will use basic Auth. and bearer Auth., and ACL .
 
+## Tooling
 
-## Tooling 
+- We will try to plan our project using different tooling like github
 
-* We will try to plan our project using different tooling like github 
-
-![link](./image/Screenshot%20(443).png) 
+![link](./image/Screenshot%20(443).png)
 ![link](./image/Screenshot%20(445).png)
