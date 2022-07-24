@@ -13,33 +13,37 @@ const userSchema = (sequelize, DataTypes) => {
     },
     email:{
       type: DataTypes.STRING,
-      allowNull: false,
+    //   allowNull: false,
 // we can add unique
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+    //   allowNu/ll: false,
     }, 
     gender: {
       type: DataTypes.STRING,
-      allowNull: false,
+    //   allowNull: false,
     },
     city: {
       type: DataTypes.STRING,
-      allowNull: false,
+    //   allowNull: false,
     },
     birthday: {
       type: DataTypes.DATE,
-      allowNull: false,
+    //   allowNull: false,
     },
     phoneNumber: {
       type: DataTypes.STRING,
-      allowNull: false,
+    //   allowNull: false,
       // unique: true,
     },
     professions: {
       type: DataTypes.STRING,
        allowNull: true,
+    },
+    facebookId: {
+      type: DataTypes.STRING,
+     
     },
    
       Date: {
