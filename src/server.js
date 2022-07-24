@@ -1,26 +1,29 @@
 'use strict';
 
 // 3rd Party Resources
- require("dotenv").config()
+require("dotenv").config()
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
 // facebook login require
-const passport=require("passport")
-const FacebookStrategy=require("passport-facebook").Strategy
+const passport = require("passport")
+const FacebookStrategy = require("passport-facebook").Strategy
 const session = require('express-session');
-const { users,service } = require("./models/index-model");
+const {
+  users,
+  service
+} = require("./models/index-model");
 // // Esoteric Resources
-const logger=require('./middleware/logger');
+const logger = require('./middleware/logger');
 const errorHandler = require('./errorhandler/500');
 const notFound = require('./errorhandler/404');
 const login = require('./routers/login');
 const signup = require('./routers/signup');
-const Search=require("./routers/searchbyname")
-const routerV2=require('./routers/api')
- const paymentRouter = require('./routers/payment')
- const services = require('./routers/services')
+const Search = require("./routers/searchbyname")
+const routerV2 = require('./routers/api')
+const paymentRouter = require('./routers/payment')
+const services = require('./routers/services')
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
@@ -28,51 +31,57 @@ const app = express();
 
 
 // facebook app level
-app.use(session({ secret: 'melody hensley is my spirit animal' }));
+app.use(session({
+  secret: 'melody hensley is my spirit animal'
+}));
 passport.use(new FacebookStrategy({
-    clientID: process.env.CLIENT_ID_FB,
-    clientSecret: process.env.CLIENT_SECRET_FB,
-    callbackURL: "http://localhost:3000/auth/facebook/home",
-    profileFields: ['id', 'displayName', 'emails', 'photos']
-  },(accessToken, refreshToken, profile, done) =>{
-    // check first if user already exists in our DB.
-      users.findOne({facebookId: profile.id}).then((currentUser) =>{
-          if (currentUser) {
-              done(null, currentUser)
-            //   console.log(profileFields)
-              console.log("1111111111111111111111",profile)
-              console.log("2222222222222222222",currentUser.token)
-          } else {
-              const user = new users({
-                  username: profile._json.name,
-                  facebookId: profile.id,
-                 
-                  
-              })
-             
-              user.save().then(() => console.log("user saved to DB."))
-              done(null, user)
-          }
+  clientID: process.env.CLIENT_ID_FB,
+  clientSecret: process.env.CLIENT_SECRET_FB,
+  callbackURL: "http://localhost:3000/auth/facebook/home",
+  profileFields: ['id', 'displayName', 'emails', 'photos']
+}, (accessToken, refreshToken, profile, done) => {
+  // check first if user already exists in our DB.
+  users.findOne({
+    facebookId: profile.id
+  }).then((currentUser) => {
+    if (currentUser) {
+      done(null, currentUser)
+      //   console.log(profileFields)
+      console.log("1111111111111111111111", profile)
+      console.log("2222222222222222222", currentUser.token)
+    } else {
+      const user = new users({
+        username: profile._json.name,
+        facebookId: profile.id,
+
+
       })
-  }))
-  
-  passport.serializeUser((user, done) =>{
-      done(null, user.id)
+
+      user.save().then(() => console.log("user saved to DB."))
+      done(null, user)
+    }
   })
-  
-  passport.deserializeUser((id, done) =>{
-      users.findById(id).then((user) =>{
-          done(null, user)
-      })
+}))
+
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+})
+
+passport.deserializeUser((id, done) => {
+  users.findById(id).then((user) => {
+    done(null, user)
   })
+})
 
 
 app.get('/auth/facebook',
   passport.authenticate('facebook'));
 
 app.get('/auth/facebook/home',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
+  passport.authenticate('facebook', {
+    failureRedirect: '/login'
+  }),
+  function (req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
   });
@@ -83,27 +92,29 @@ app.use(cors());
 app.use(morgan('dev'));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.get('/',(req,res)=>{
+app.use(express.urlencoded({
+  extended: true
+}));
+app.get('/', (req, res) => {
   res.send("Application app");
 })
-app.get("/login",(req,res)=>{
-    res.sendFile(__dirname + '/signin.html');
+app.get("/login", (req, res) => {
+  res.sendFile(__dirname + '/signin.html');
 })
-app.get("/home",(req,res)=>{
-    res.send("welcome to my secret page")
+app.get("/home", (req, res) => {
+  res.send("welcome to my secret page")
 })
 
 
 // Routes
-app.use('/search',Search)
-app.use('/users',signup);
-app.use('/users',login);
+app.use('/search', Search)
+app.use('/users', signup);
+app.use('/users', login);
 app.use(paymentRouter)
 app.use(services)
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
-app.use('/api/v2',routerV2);
+app.use('/api/v2', routerV2);
 // // Catchalls
 app.use(logger)
 app.use(notFound);
