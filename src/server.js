@@ -17,6 +17,7 @@ const errorHandler = require('./errorhandler/500');
 const notFound = require('./errorhandler/404');
 const login = require('./routers/login');
 const signup = require('./routers/signup');
+const contactUs=require("./routers/contactUs");
 const Search=require("./routers/searchbyname")
 const routerV2=require('./routers/api')
  const paymentRouter = require('./routers/payment')
@@ -99,8 +100,9 @@ app.get("/home",(req,res)=>{
 app.use('/search',Search)
 app.use('/users',signup);
 app.use('/users',login);
-app.use(paymentRouter)
-app.use(services)
+app.use(paymentRouter);
+app.use(services);
+app.use(contactUs);
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
 app.use('/api/v2',routerV2);

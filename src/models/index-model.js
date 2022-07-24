@@ -7,7 +7,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 // Tables
 const usersModel = require('./users');
-
+const contactUsModel=require("./contactus")
 const serviceModel = require('./services');
 const interactionsModel = require('./interactions');
 const paymentModel = require('./credit card')
@@ -30,6 +30,7 @@ const service = serviceModel(sequelize, DataTypes);
 const interactions = interactionsModel(sequelize, DataTypes);
 const users = usersModel(sequelize,DataTypes)
 const payment = paymentModel(sequelize,DataTypes)
+const contactUs=contactUsModel(sequelize,DataTypes)
 
 
 //....relationships one to many........
@@ -77,5 +78,6 @@ module.exports = {
   users: users,
   service: service,
   interactions: interactions ,
-  payment:payment
+  payment:payment,
+  contactUs:contactUs,
 };
