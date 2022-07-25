@@ -10,7 +10,7 @@ mostRatedRouter.get('/mostrated',bearer,async (req, res) => {
    
     
     let allRecords = await interactions.findAll({ 
-            limit: 3 ,
+           
             order: [['rate', 'DESC']]
         }
     );

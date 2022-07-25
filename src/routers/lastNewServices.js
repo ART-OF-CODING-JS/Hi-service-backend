@@ -10,8 +10,8 @@ const lastNewRouter = express.Router();
    
     
     let allRecords = await service.findAll({ 
-          
-            order: [['id', 'DESC']]
+      // create At : its mean the time that did user signup in website
+            order: [['createdAt', 'DESC']]
         }
     );
     res.status(200).json(allRecords);
