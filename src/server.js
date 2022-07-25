@@ -23,6 +23,8 @@ const Search = require("./routers/searchbyname");
 const routerV2 = require("./routers/api");
 const paymentRouter = require("./routers/payment");
 const services = require("./routers/services");
+const mostRated=require("./routers/mostRated");
+const lastnews=require("./routers/lastNewServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
@@ -119,6 +121,8 @@ app.use("/users", login);
 app.use(paymentRouter);
 app.use(services);
 app.use(contactUs);
+app.use(mostRated);
+app.use(lastnews);
 app.use(deleteProfileRouter);
 
 // app.use(searchBar)
