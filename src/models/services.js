@@ -2,7 +2,12 @@
 
 const services = (sequelize, DataTypes) => {
     const model = sequelize.define('services', {
-        nameProfession: {
+      department: {
+            type: DataTypes.STRING,
+            allowNull: false,
+
+        },
+      title: {
             type: DataTypes.STRING,
             allowNull: false,
 
@@ -37,7 +42,7 @@ const services = (sequelize, DataTypes) => {
   model.searchService = async function (searchTerm) {
     const users = await model.findAll({
       where: {
-        nameProfession: searchTerm
+        department: searchTerm
       }
     });
 

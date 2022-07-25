@@ -5,9 +5,9 @@ const deleteProfileRouter = express.Router();
 
 const { users } = require("../models/index-model");
 const bcrypt = require("bcrypt");
-
+const bearer = require('../middleware/bearer')
 // Delete profile by himself
-deleteProfileRouter.post("/deleteprofile", async (req, res, next) => {
+deleteProfileRouter.post("/deleteprofile", bearer,async (req, res) => {
   let userId = parseInt(req.body.id);
   let password = req.body.password;
   let confirmPass = req.body.confirmPass;
@@ -23,11 +23,11 @@ deleteProfileRouter.post("/deleteprofile", async (req, res, next) => {
           if (validPass) {
             let deleteProfile = await users.destroy({ where: { id: userId } });
             res.status(201).send({ status: "User Profile Deleted successfully!" });
-            next();
+         
           } else res.status(404).send("Tha password not correct!");
         } else res.status(404).send("Something went wrong!");
       } catch (err) {
-        next(err);
+       console.log(err);
       }
     } else {
       res.status(404).send({ status: "The passwords did not match" });

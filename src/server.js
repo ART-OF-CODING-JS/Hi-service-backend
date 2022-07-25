@@ -24,6 +24,7 @@ const routerV2 = require("./routers/api");
 const paymentRouter = require("./routers/payment");
 const services = require("./routers/services");
 const deleteProfileRouter = require("./routers/deleteProfile");
+const department = require('./routers/category/departments')
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
@@ -120,6 +121,7 @@ app.use(paymentRouter);
 app.use(services);
 app.use(contactUs);
 app.use(deleteProfileRouter);
+app.use(department);
 
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
