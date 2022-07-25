@@ -46,10 +46,6 @@ const userSchema = (sequelize, DataTypes) => {
      
     },
    
-     Date: {
-        type: DataTypes.DATEONLY,
-        defaultValue: DataTypes.NOW,
-      },
       didPay:{
      type: DataTypes.BOOLEAN,
      defaultValue: false

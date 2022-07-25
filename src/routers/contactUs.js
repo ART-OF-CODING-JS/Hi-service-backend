@@ -23,7 +23,8 @@ contactRouter.post('/contactus',bearer ,async (req, res) => {
   }
 });
 
-contactRouter.get('/contactuss',bearer,async (req, res) => {
+// only the admin can get all records
+contactRouter.get('/contactus',bearer,async (req, res) => {
   console.log("sssssssssssssssssssssssssssss555s",req.user.role)
   if(req.user.role === 'admin') {
   
@@ -31,7 +32,7 @@ contactRouter.get('/contactuss',bearer,async (req, res) => {
   res.status(200).json(allRecords);
   }
   else {
-    res.status(200).send("access denied"); 
+    res.status(404).send("access denied"); 
   }
 })
 
