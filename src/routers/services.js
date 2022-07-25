@@ -28,6 +28,7 @@ async function handleGetAll(req, res) {
     const id = req.params.id ;
   
    let readOne = await service.findOne({where:{id:id}});
+   console.log('time is',readOne.createdAt);
    res.status(200).json(readOne);
   }
 
