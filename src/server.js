@@ -17,6 +17,7 @@ const errorHandler = require("./errorhandler/500");
 const notFound = require("./errorhandler/404");
 const login = require("./routers/login");
 const signup = require("./routers/signup");
+const signupCompany=require("./routers/signupCompany")
 
 const contactUs = require("./routers/contactUs");
 const Search = require("./routers/searchbyname");
@@ -26,6 +27,7 @@ const services = require("./routers/services");
 const mostRated=require("./routers/mostRated");
 const lastnews=require("./routers/lastNewServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
+
 const department = require('./routers/category/departments')
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
@@ -125,6 +127,7 @@ app.use(contactUs);
 app.use(mostRated);
 app.use(lastnews);
 app.use(deleteProfileRouter);
+app.use(signupCompany)
 app.use(department);
 
 // app.use(searchBar)
