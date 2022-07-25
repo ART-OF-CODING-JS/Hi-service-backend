@@ -1,5 +1,8 @@
 'use strict';
 
+const { Op } = require("sequelize");
+const { company } = require("./index-model");
+
 const services = (sequelize, DataTypes) => {
     const model = sequelize.define('services', {
         nameProfession: {
@@ -37,8 +40,12 @@ const services = (sequelize, DataTypes) => {
   model.searchService = async function (searchTerm) {
     const users = await model.findAll({
       where: {
-        nameProfession: searchTerm
-      }
+        nameProfession:{ [Op.like]:'%' + searchTerm + '%'},
+        
+      },
+      
+   
+
     });
 
       return users;

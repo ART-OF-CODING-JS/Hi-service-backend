@@ -2,7 +2,6 @@
 const bcrypt = require("bcrypt");
 const { users } = require("../models/index-model");
 const express = require('express');
-const nodeMailer = require("nodemailer");
 const authRouter = express.Router();
 authRouter.post ('/signup',async(req, res)=>{
 
