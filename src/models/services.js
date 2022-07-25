@@ -42,7 +42,7 @@ const services = (sequelize, DataTypes) => {
   model.searchService = async function (searchTerm) {
     const users = await model.findAll({
       where: {
-        department: searchTerm
+        title: searchTerm
       }
     });
 
