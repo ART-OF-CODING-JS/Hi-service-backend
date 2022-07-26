@@ -14,7 +14,7 @@ const mail = require('./email')
 
     const record = await users.create({ username: username, password: passwordhash, role: role, email: email, city: city, gender: gender, birthday: birthday, phoneNumber: phoneNumber, professions: professions });
     console.log({ record });
-
+  // to send email verification
     mail(req.body.email)
 
   res.status(201).json(record);
