@@ -1,55 +1,54 @@
-'use strict';
+"use strict";
 
-require("dotenv").config()
+require("dotenv").config();
 
-
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes } = require("sequelize");
 
 // Tables
-const usersModel = require('./users');
-const contactUsModel=require("./contactus")
-const serviceModel = require('./services');
-const interactionsModel = require('./interactions');
-const paymentModel = require('./credit card')
-const companyModel = require('./company')
+const usersModel = require("./users");
+const contactUsModel = require("./contactus");
+const serviceModel = require("./services");
+const interactionsModel = require("./interactions");
+const paymentModel = require("./credit card");
+const companyModel = require("./company");
 
+const DATABASE_URL = process.env.NODE_ENV === "test" ? "sqlite::memory" : process.env.DATABASE_URL;
 
-
-const DATABASE_URL = process.env.NODE_ENV === 'test' ? 'sqlite::memory' : process.env.DATABASE_URL;
-
-const DATABASE_CONFIG = process.env.NODE_ENV === 'production' ? {
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    }
-  }
-} : {};
+const DATABASE_CONFIG =
+  process.env.NODE_ENV === "production"
+    ? {
+        dialectOptions: {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false,
+          },
+        },
+      }
+    : {};
 const sequelize = new Sequelize(DATABASE_URL, DATABASE_CONFIG);
 
 const service = serviceModel(sequelize, DataTypes);
 const interactions = interactionsModel(sequelize, DataTypes);
-const users = usersModel(sequelize,DataTypes)
-const payment = paymentModel(sequelize,DataTypes)
-const contactUs=contactUsModel(sequelize,DataTypes)
-const company=companyModel(sequelize,DataTypes)
+const users = usersModel(sequelize, DataTypes);
+const payment = paymentModel(sequelize, DataTypes);
+const contactUs = contactUsModel(sequelize, DataTypes);
+const company = companyModel(sequelize, DataTypes);
 
 //....relationships one to many........
 // service
-users.hasMany(service,{
+users.hasMany(service, {
   foreignKey: "userID",
-  sourceKey: "id"
+  sourceKey: "id",
 });
 service.belongsTo(users, {
   foreignKey: "userID",
   targetKey: "id",
 });
 
-
 // interactions
-users.hasMany(interactions,{
+users.hasMany(interactions, {
   foreignKey: "userID",
-  sourceKey: "id"
+  sourceKey: "id",
 });
 
 interactions.belongsTo(users, {
@@ -58,28 +57,23 @@ interactions.belongsTo(users, {
 });
 
 // relations between service and interactions
-service.hasMany(interactions,{
+service.hasMany(interactions, {
   foreignKey: "serviceID",
-  targetKey: "id"
-})
+  targetKey: "id",
+});
 interactions.belongsTo(service, {
   foreignKey: "serviceID",
   targetKey: "id",
 });
 
-
-
 // interactions with service
-
-
-
 
 module.exports = {
   db: sequelize,
   users: users,
   service: service,
-  interactions: interactions ,
-  payment:payment,
-  contactUs:contactUs,
-  company:company
+  interactions: interactions,
+  payment: payment,
+  contactUs: contactUs,
+  company: company,
 };
