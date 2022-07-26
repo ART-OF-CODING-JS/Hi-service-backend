@@ -30,7 +30,8 @@ const aboutus = require("./routers/aboutus");
 const discount = require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
 
-const department = require("./routers/category/departments");
+const department = require('./routers/category/departments')
+const MyServicesRouter = require('./routers/myservices')
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
@@ -131,6 +132,7 @@ app.use(lastnews);
 app.use(deleteProfileRouter);
 app.use(signupCompany);
 app.use(department);
+app.use(MyServicesRouter);
 app.use(aboutus);
 app.use(discount);
 
