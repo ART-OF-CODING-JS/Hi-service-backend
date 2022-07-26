@@ -26,6 +26,8 @@ const paymentRouter = require("./routers/payment");
 const services = require("./routers/services");
 const mostRated=require("./routers/mostRated");
 const lastnews=require("./routers/lastNewServices");
+const aboutus=require("./routers/aboutus");
+const discount=require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
 
 const department = require('./routers/category/departments')
@@ -129,6 +131,8 @@ app.use(lastnews);
 app.use(deleteProfileRouter);
 app.use(signupCompany)
 app.use(department);
+app.use(aboutus);
+app.use(discount);
 
 // app.use(searchBar)
 // // app.use('/users',authRoutes);

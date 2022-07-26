@@ -74,7 +74,10 @@ const userSchema = (sequelize, DataTypes) => {
         }
         return acl[this.role];
       }
-    }
+    },
+      image: {
+      type: DataTypes.STRING,
+      }
   });
   model.beforeCreate=async function (user) {
     let hashedPass =await bcrypt.hash(user.password, 10);
