@@ -55,6 +55,10 @@ const userSchema = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('admin', 'writer', 'editor', 'user'),
       defaultValue: 'user',
     },
+    companyOrUser: {
+      type: DataTypes.ENUM('company', 'user'),
+      defaultValue: 'user',
+    },
     token: {
       type: DataTypes.VIRTUAL,
       get() {
