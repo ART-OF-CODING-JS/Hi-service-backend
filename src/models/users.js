@@ -1,128 +1,128 @@
-'use strict';
+"use strict";
 
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 // const nodemailer = require("nodemailer");
-require('dotenv').config();
+require("dotenv").config();
 const userSchema = (sequelize, DataTypes) => {
-  const model = sequelize.define('users', {
+  const model = sequelize.define("users", {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
-    email:{
+    email: {
       type: DataTypes.STRING,
-    //   allowNull: false,
-// we can add unique
+      //   allowNull: false,
+      // we can add unique
     },
     password: {
       type: DataTypes.STRING,
-    //   allowNu/ll: false,
-    }, 
+      //   allowNu/ll: false,
+    },
     gender: {
       type: DataTypes.STRING,
-    //   allowNull: false,
+      //   allowNull: false,
     },
     city: {
       type: DataTypes.STRING,
-    //   allowNull: false,
+      //   allowNull: false,
     },
     birthday: {
       type: DataTypes.DATE,
-    //   allowNull: false,
+      //   allowNull: false,
     },
     phoneNumber: {
       type: DataTypes.STRING,
-    //   allowNull: false,
+      //   allowNull: false,
       // unique: true,
     },
     professions: {
       type: DataTypes.STRING,
-       allowNull: true,
+      allowNull: true,
     },
     facebookId: {
       type: DataTypes.STRING,
-     
     },
-   
-      didPay:{
-     type: DataTypes.BOOLEAN,
-     defaultValue: false
+
+    didPay: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
-   
+
     role: {
-      type: DataTypes.ENUM('admin', 'writer', 'editor', 'user'),
-      defaultValue: 'user',
+      type: DataTypes.ENUM("admin", "writer", "editor", "user"),
+      defaultValue: "user",
     },
     token: {
       type: DataTypes.VIRTUAL,
       get() {
-        return jwt.sign({
-          username: this.username
-        }, process.env.SECRET);
-      }
-    }, 
+        return jwt.sign(
+          {
+            username: this.username,
+          },
+          process.env.SECRET
+        );
+      },
+    },
     actions: {
       type: DataTypes.VIRTUAL,
       get() {
-        const acl = { 
-          user: ['read'],
-          writer: ['read', 'create'],
-          editor: ['read', 'create', 'update'],
-          admin: ['read', 'create', 'update', 'delete'],
-        }
+        const acl = {
+          user: ["read"],
+          writer: ["read", "create"],
+          editor: ["read", "create", "update"],
+          admin: ["read", "create", "update", "delete"],
+        };
         return acl[this.role];
-      }
+      },
     },
-      image: {
+    image: {
       type: DataTypes.STRING,
-      }
+    },
   });
-  model.beforeCreate=async function (user) {
-    let hashedPass =await bcrypt.hash(user.password, 10);
+
+  model.beforeCreate = async function (user) {
+    let hashedPass = await bcrypt.hash(user.password, 10);
     return hashedPass;
   };
 
-  
- 
-
-// basic
+  // basic
   model.authenticateBasic = async function (username, password) {
     const user = await model.findOne({
       where: {
-        username: username
-      }
+        username: username,
+      },
     });
 
     const valid = await bcrypt.compare(password, user.password);
-// console.log("passsssssss",password,user.password);
+    // console.log("passsssssss",password,user.password);
     if (valid) {
       return user;
     }
-    throw new Error('Invalid User');
-  }
+    throw new Error("Invalid User");
+  };
 
-// Bearer
+  // Bearer
   model.authenticateToken = async function (token) {
     try {
       const parsedToken = jwt.verify(token, process.env.SECRET);
-     let y = parsedToken.username;
-      const user =  await this.findOne({
+      let y = parsedToken.username;
+      const user = await this.findOne({
         where: {
-          username: parsedToken.username
-        }
+          username: parsedToken.username,
+        },
       });
       if (user) {
         return user;
       }
       throw new Error("User Not Found");
     } catch (e) {
-      throw new Error(e.message)
+      throw new Error(e.message);
     }
-  }
+  };
 
   return model;
-}
+};
 
 module.exports = userSchema;
