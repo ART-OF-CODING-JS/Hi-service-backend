@@ -35,6 +35,10 @@ const services = (sequelize, DataTypes) => {
             allowNull: false,
             // We can add unique Number
         },
+        discount: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: false,
+        },
         userID: {
             type: DataTypes.INTEGER,
         }
