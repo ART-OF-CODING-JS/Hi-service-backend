@@ -5,12 +5,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-
 // facebook login require
-const passport = require("passport");
-const FacebookStrategy = require("passport-facebook").Strategy;
-const session = require("express-session");
-const { users, service } = require("./models/index-model");
 // // Esoteric Resources
 const logger = require("./middleware/logger");
 const errorHandler = require("./errorhandler/500");
@@ -30,7 +25,7 @@ const lastnews = require("./routers/lastNewServices");
 const aboutus = require("./routers/aboutus");
 const discount = require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
-
+const facebook=require("./facebooklog")
 const department = require('./routers/category/departments')
 const company=require("./routers/company-route")
 const MyServicesRouter = require('./routers/myservices')
@@ -44,78 +39,78 @@ const blockAdminRouter = require('./routers/block/block.admin')
 const app = express();
 
 // facebook app level
-app.use(
-  session({
-    secret: "melody hensley is my spirit animal",
-  })
-);
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: process.env.CLIENT_ID_FB,
-      clientSecret: process.env.CLIENT_SECRET_FB,
-      callbackURL: "http://localhost:3000/auth/facebook/home",
-      profileFields: ["id", "displayName", "emails", "photos"],
-    },
-    (accessToken, refreshToken, profile, done) => {
-      // check first if user already exists in our DB.
-      users
-        .findOne({
-          facebookId: profile.id,
-        })
-        .then((currentUser) => {
-          if (currentUser) {
-            done(null, currentUser);
-            //   console.log(profileFields)
-            console.log("1111111111111111111111", profile);
-            console.log("2222222222222222222", currentUser.token);
-          } else {
-            const user = new users({
-              username: profile._json.name,
-              facebookId: profile.id,
-            });
+// app.use(
+//   session({
+//     secret: "melody hensley is my spirit animal",
+//   })
+// );
+// passport.use(
+//   new FacebookStrategy(
+//     {
+//       clientID: process.env.CLIENT_ID_FB,
+//       clientSecret: process.env.CLIENT_SECRET_FB,
+//       callbackURL: "http://localhost:3000/auth/facebook/home",
+//       profileFields: ["id", "displayName", "emails", "photos"],
+//     },
+//     (accessToken, refreshToken, profile, done) => {
+//       // check first if user already exists in our DB.
+//       users
+//         .findOne({
+//           facebookId: profile.id,
+//         })
+//         .then((currentUser) => {
+//           if (currentUser) {
+//             done(null, currentUser);
+//             //   console.log(profileFields)
+//             console.log("1111111111111111111111", profile);
+//             console.log("2222222222222222222", currentUser.token);
+//           } else {
+//             const user = new users({
+//               username: profile._json.name,
+//               facebookId: profile.id,
+//             });
 
-            user.save().then(() => console.log("user saved to DB."));
-            done(null, user);
-          }
-        });
-    }
-  )
-);
+//             user.save().then(() => console.log("user saved to DB."));
+//             done(null, user);
+//           }
+//         });
+//     }
+//   )
+// );
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
+// passport.serializeUser((user, done) => {
+//   done(null, user.id);
+// });
 
-passport.deserializeUser((id, done) => {
-  users.findById(id).then((user) => {
-    done(null, user);
-  });
-});
+// passport.deserializeUser((id, done) => {
+//   users.findById(id).then((user) => {
+//     done(null, user);
+//   });
+// });
 
-app.get("/auth/facebook", passport.authenticate("facebook"));
+// app.get("/auth/facebook", passport.authenticate("facebook"));
 
-app.get(
-  "/auth/facebook/home",
-  passport.authenticate("facebook", {
-    failureRedirect: "/login",
-  }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect("/");
-  }
-);
+// app.get(
+//   "/auth/facebook/home",
+//   passport.authenticate("facebook", {
+//     failureRedirect: "/login",
+//   }),
+//   function (req, res) {
+//     // Successful authentication, redirect home.
+//     res.redirect("/");
+//   }
+// );
 
-// App Level MW
-app.use(cors());
-app.use(morgan("dev"));
+// // App Level MW
+// app.use(cors());
+// app.use(morgan("dev"));
 
-app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
+// app.use(express.json());
+// app.use(
+//   express.urlencoded({
+//     extended: true,
+//   })
+// );
 app.get("/", (req, res) => {
   res.send("Application app");
 });
@@ -146,7 +141,7 @@ app.use(aboutus);
 app.use(discount);
 app.use(blockRouter);
 app.use(blockAdminRouter);
-
+app.use(facebook)
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
 app.use("/api/v2", routerV2);
