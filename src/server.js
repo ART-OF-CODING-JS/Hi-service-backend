@@ -17,7 +17,8 @@ const errorHandler = require("./errorhandler/500");
 const notFound = require("./errorhandler/404");
 const login = require("./routers/login");
 const signup = require("./routers/signup");
-const signupCompany = require("./routers/signupCompany");
+const {authRouter}=require("./routers/signupCompany")
+// const signupCompany = require("./routers/signupCompany");
 
 const contactUs = require("./routers/contactUs");
 const Search = require("./routers/searchbyname");
@@ -31,6 +32,7 @@ const discount = require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
 
 const department = require('./routers/category/departments')
+const company=require("./routers/company-route")
 const MyServicesRouter = require('./routers/myservices')
 //block routers
 const blockRouter = require('./routers/block/block.users')
@@ -134,7 +136,10 @@ app.use(contactUs);
 app.use(mostRated);
 app.use(lastnews);
 app.use(deleteProfileRouter);
-app.use(signupCompany);
+app.use(authRouter)
+app.use(department);
+app.use(company)
+// app.use(signupCompany);
 app.use(department);
 app.use(MyServicesRouter);
 app.use(aboutus);
@@ -149,6 +154,9 @@ app.use("/api/v2", routerV2);
 app.use(logger);
 app.use(notFound);
 app.use(errorHandler);
+
+
+
 
 module.exports = {
   server: app,

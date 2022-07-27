@@ -10,9 +10,9 @@ const searchRouter = express.Router();
 searchRouter.post('/byName',bearer,async(req, res)=>{
 
   try {
-    const { searchTerm} = req.body;
+    const {title} = req.body;
   
-    const records = await service.searchService(searchTerm)
+    const records = await service.searchService(title)
     console.log({ records });
     res.status(201).json(records);
 
