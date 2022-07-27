@@ -18,18 +18,22 @@ const notFound = require("./errorhandler/404");
 const login = require("./routers/login");
 const signup = require("./routers/signup");
 const {authRouter}=require("./routers/signupCompany")
+// const signupCompany = require("./routers/signupCompany");
 
 const contactUs = require("./routers/contactUs");
 const Search = require("./routers/searchbyname");
 const routerV2 = require("./routers/api");
 const paymentRouter = require("./routers/payment");
 const services = require("./routers/services");
-const mostRated=require("./routers/mostRated");
-const lastnews=require("./routers/lastNewServices");
+const mostRated = require("./routers/mostRated");
+const lastnews = require("./routers/lastNewServices");
+const aboutus = require("./routers/aboutus");
+const discount = require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
 
 const department = require('./routers/category/departments')
 const company=require("./routers/company-route")
+const MyServicesRouter = require('./routers/myservices')
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
@@ -131,6 +135,12 @@ app.use(deleteProfileRouter);
 app.use(authRouter)
 app.use(department);
 app.use(company)
+// app.use(signupCompany);
+app.use(department);
+app.use(MyServicesRouter);
+app.use(aboutus);
+app.use(discount);
+
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
 app.use("/api/v2", routerV2);
@@ -138,6 +148,9 @@ app.use("/api/v2", routerV2);
 app.use(logger);
 app.use(notFound);
 app.use(errorHandler);
+
+
+
 
 module.exports = {
   server: app,

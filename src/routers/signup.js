@@ -2,7 +2,7 @@
 
 const bcrypt = require("bcrypt");
 const { users } = require("../models/index-model");
-const express = require('express');
+const express = require("express");
 const authRouter = express.Router();
 const {companyForm}=require("./signupCompany")
 authRouter.post('/signup', async (req, res) => {
@@ -24,10 +24,10 @@ if(req.body.companyOrUser==="company"){
 }
     
 
+    res.status(201).json(record);
   } catch (err) {
     console.log(err);
   }
-})
+});
 
 module.exports = authRouter;
-
