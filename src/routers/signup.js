@@ -8,11 +8,11 @@ const {companyForm}=require("./signupCompany")
 authRouter.post('/signup', async (req, res) => {
   const mail = require('./email')
   try {
+    console.log("@@@@@@@@@@@@@@@@@@@@@@",req.body.city)
     const { role, email, username, city, gender, birthday, phoneNumber, professions, password, companyOrUser } = req.body;
     const passwordhash = await bcrypt.hash(password, 10);
 
     // add email
-
     const record = await users.create({ username: username, password: passwordhash, role: role, companyOrUser: companyOrUser, email: email, city: city, gender: gender, birthday: birthday, phoneNumber: phoneNumber, professions: professions });
     console.log({ record });
 

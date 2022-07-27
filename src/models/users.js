@@ -53,10 +53,10 @@ const userSchema = (sequelize, DataTypes) => {
       type:DataTypes.ARRAY(DataTypes.INTEGER)
 
     },
-  blocked:{
-type:DataTypes.BOOLEAN,
-defaultValue:false
-  },
+    blocked:{
+  type:DataTypes.BOOLEAN,
+  defaultValue:false
+    },
    
     role: {
       type: DataTypes.ENUM("admin", "writer", "editor", "user"),
