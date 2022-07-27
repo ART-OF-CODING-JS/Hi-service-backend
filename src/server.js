@@ -31,6 +31,10 @@ const discount=require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
 const department = require('./routers/category/departments')
 const MyServicesRouter = require('./routers/myservices')
+//block routers
+const blockRouter = require('./routers/block/block.users')
+const blockAdminRouter = require('./routers/block/block.admin')
+
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
@@ -134,6 +138,8 @@ app.use(department);
 app.use(MyServicesRouter);
 app.use(aboutus);
 app.use(discount);
+app.use(blockRouter);
+app.use(blockAdminRouter);
 
 // app.use(searchBar)
 // // app.use('/users',authRoutes);

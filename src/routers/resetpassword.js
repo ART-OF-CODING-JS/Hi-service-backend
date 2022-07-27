@@ -8,8 +8,8 @@ const {users} = require('../models/index-model');
 
 const {username,newPassword,email} = req.body;
 try{
-    const foundUser =users.findOne({where:{username:username}})
-   
+    const foundUser =  await users.findOne({where:{username:username}})
+
 if(foundUser){
     if(email === foundUser.email){
    
