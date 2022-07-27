@@ -4,8 +4,9 @@
 
 const express = require("express");
 const router = express.Router();
-const { service } = require("../models/index-model");
+const { service, users } = require("../models/index-model");
 const bearer = require("../middleware/bearer");
+const { Op } = require("sequelize");
 
 router.get("/service", bearer, handleGetAll);
 router.get("/service/:id", bearer, handleGetOne);
@@ -15,7 +16,14 @@ router.delete("/service/:id", bearer, handleDelete);
 
 // Get All Records
 async function handleGetAll(req, res) {
-  let allRecords = await service.findAll();
+  const tokenId = req.user.id;
+
+  const findUser = await users.findOne({ where: { id: tokenId } });
+
+  let allRecords = await service.findAll({
+    where: {userID:{[Op.notIn]: findUser.usersBlockList} },
+  });
+  
   res.status(200).json(allRecords);
 }
 
@@ -35,7 +43,11 @@ async function handleCreate(req, res) {
   let services;
   // just for service model to check if user has more than 3 ,..,.. services
   services = await service.paymentFunction(tokenId); // function to get number of services
-  if (services.numberService < 3 || services.foundUser.didPay || req.user.role === "admin") {
+  if (
+    services.numberService < 3 ||
+    services.foundUser.didPay ||
+    req.user.role === "admin"
+  ) {
     let newRecord = await service.create(obj);
     res.status(201).json(newRecord);
   } else {
@@ -80,6 +92,7 @@ async function handleDelete(req, res) {
   } catch (err) {
     res.status(404).send(err);
   }
+  
 }
 
 module.exports = router;

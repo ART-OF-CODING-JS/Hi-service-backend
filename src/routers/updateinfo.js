@@ -45,11 +45,13 @@ async function updatePassword(req, res, next) {
   const oldPass = req.body.oldPassword;
   const newPass = req.body.newPassword;
   try {
+
+    // we can delete ID but we will see if we will needed in frontend
     let ID = parseInt(req.params.id);
-    const found = await users.findOne({ where: { id: ID } });
+    const found = await users.findOne({ where: { id: tokenId } });
     const valid = await bcrypt.compare(oldPass, found.password);
 
-    if ((found && tokenId === ID) || (role == "admin" && found)) {
+    if ((found && tokenId === ID) || (role === "admin" && found)) {
       if (valid) {
         // to change the password
 
