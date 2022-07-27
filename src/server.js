@@ -38,79 +38,7 @@ const blockAdminRouter = require('./routers/block/block.admin')
 // // Prepare the express app
 const app = express();
 
-// facebook app level
-// app.use(
-//   session({
-//     secret: "melody hensley is my spirit animal",
-//   })
-// );
-// passport.use(
-//   new FacebookStrategy(
-//     {
-//       clientID: process.env.CLIENT_ID_FB,
-//       clientSecret: process.env.CLIENT_SECRET_FB,
-//       callbackURL: "http://localhost:3000/auth/facebook/home",
-//       profileFields: ["id", "displayName", "emails", "photos"],
-//     },
-//     (accessToken, refreshToken, profile, done) => {
-//       // check first if user already exists in our DB.
-//       users
-//         .findOne({
-//           facebookId: profile.id,
-//         })
-//         .then((currentUser) => {
-//           if (currentUser) {
-//             done(null, currentUser);
-//             //   console.log(profileFields)
-//             console.log("1111111111111111111111", profile);
-//             console.log("2222222222222222222", currentUser.token);
-//           } else {
-//             const user = new users({
-//               username: profile._json.name,
-//               facebookId: profile.id,
-//             });
 
-//             user.save().then(() => console.log("user saved to DB."));
-//             done(null, user);
-//           }
-//         });
-//     }
-//   )
-// );
-
-// passport.serializeUser((user, done) => {
-//   done(null, user.id);
-// });
-
-// passport.deserializeUser((id, done) => {
-//   users.findById(id).then((user) => {
-//     done(null, user);
-//   });
-// });
-
-// app.get("/auth/facebook", passport.authenticate("facebook"));
-
-// app.get(
-//   "/auth/facebook/home",
-//   passport.authenticate("facebook", {
-//     failureRedirect: "/login",
-//   }),
-//   function (req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect("/");
-//   }
-// );
-
-// // App Level MW
-// app.use(cors());
-// app.use(morgan("dev"));
-
-// app.use(express.json());
-// app.use(
-//   express.urlencoded({
-//     extended: true,
-//   })
-// );
 app.get("/", (req, res) => {
   res.send("Application app");
 });
