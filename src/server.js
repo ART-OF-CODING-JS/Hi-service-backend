@@ -5,12 +5,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-
 // facebook login require
-const passport = require("passport");
-const FacebookStrategy = require("passport-facebook").Strategy;
-const session = require("express-session");
-const { users, service } = require("./models/index-model");
 // // Esoteric Resources
 const logger = require("./middleware/logger");
 const errorHandler = require("./errorhandler/500");
@@ -30,7 +25,7 @@ const lastnews = require("./routers/lastNewServices");
 const aboutus = require("./routers/aboutus");
 const discount = require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
-
+const facebook=require("./facebooklog")
 const department = require('./routers/category/departments')
 const company=require("./routers/company-route")
 const MyServicesRouter = require('./routers/myservices')
@@ -146,7 +141,7 @@ app.use(aboutus);
 app.use(discount);
 app.use(blockRouter);
 app.use(blockAdminRouter);
-
+app.use(facebook)
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
 app.use("/api/v2", routerV2);

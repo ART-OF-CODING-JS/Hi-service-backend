@@ -3,9 +3,9 @@ const passport = require("passport");
 const FacebookStrategy = require("passport-facebook").Strategy;
 const session = require("express-session");
 const { users, service } = require("./models/index-model");
-const express = require("express");
-const app=express()
-app.use(
+const express = require('express');
+const faceRoute = express.Router();
+faceRoute.use(
     session({
       secret: "melody hensley is my spirit animal",
     })
@@ -55,9 +55,9 @@ passport.use(
     });
   });
   
-  app.get("/auth/facebook", passport.authenticate("facebook"));
+  faceRoute.get("/auth/facebook", passport.authenticate("facebook"));
   
-  app.get(
+  faceRoute.get(
     "/auth/facebook/home",
     passport.authenticate("facebook", {
       failureRedirect: "/login",
@@ -67,4 +67,6 @@ passport.use(
       res.redirect("/");
     }
   );
+
+  module.exports=faceRoute
 
