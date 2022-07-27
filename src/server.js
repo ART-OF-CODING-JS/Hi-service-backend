@@ -26,6 +26,7 @@ const aboutus = require("./routers/aboutus");
 const discount = require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
 const facebook=require("./facebooklog")
+const google=require("./google")
 const department = require('./routers/category/departments')
 const company=require("./routers/company-route")
 const MyServicesRouter = require('./routers/myservices')
@@ -37,7 +38,11 @@ const blockAdminRouter = require('./routers/block/block.admin')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
 const app = express();
+app.use(cors());
+app.use(morgan('dev'));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("Application app");
@@ -70,6 +75,7 @@ app.use(discount);
 app.use(blockRouter);
 app.use(blockAdminRouter);
 app.use(facebook)
+app.use(google)
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
 app.use("/api/v2", routerV2);
