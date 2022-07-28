@@ -39,7 +39,7 @@ const userSchema = (sequelize, DataTypes) => {
     },
     professions: {
       type: DataTypes.STRING,
-      allowNull: true,
+      
     },
     facebookId: {
       type: DataTypes.STRING,
@@ -61,11 +61,11 @@ const userSchema = (sequelize, DataTypes) => {
    
     role: {
       type: DataTypes.ENUM("admin", "writer", "editor", "user"),
-      defaultValue: "user",
+      defaultValue:"user"
     },
     companyOrUser: {
       type: DataTypes.ENUM('company', 'user'),
-      defaultValue: 'user',
+      defaultValue:'user'
     },
     token: {
       type: DataTypes.VIRTUAL,
@@ -91,6 +91,9 @@ const userSchema = (sequelize, DataTypes) => {
       },
     },
     image: {
+      type: DataTypes.STRING,
+    },
+    googleId: {
       type: DataTypes.STRING,
     },
   });
