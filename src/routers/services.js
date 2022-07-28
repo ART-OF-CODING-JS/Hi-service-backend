@@ -18,7 +18,6 @@ router.delete("/service/:id", bearer, handleDelete);
 async function handleGetAll(req, res) {
   const tokenId = req.user.id;
   const findUser = await users.findOne({ where: { id: tokenId } });
-  
   let allRecords = await service.findAll();
   
   // console.log({allRecords});

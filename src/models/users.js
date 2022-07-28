@@ -50,7 +50,8 @@ const userSchema = (sequelize, DataTypes) => {
       defaultValue: false,
     },
     usersBlockList:{
-      type:DataTypes.ARRAY(DataTypes.INTEGER)
+      type:DataTypes.ARRAY(DataTypes.INTEGER),
+      defaultValue:[]
 
     },
     blocked:{
