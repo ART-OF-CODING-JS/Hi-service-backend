@@ -16,7 +16,7 @@ authRouter.post('/signup', async (req, res) => {
     const record = await users.create({ username: username, password: passwordhash, role: role, companyOrUser: companyOrUser, email: email, city: city, gender: gender, birthday: birthday, phoneNumber: phoneNumber, professions: professions });
     console.log({ record });
 
-    mail(req.body.email)
+    // mail(req.body.email)
     res.status(201).json(record);
 if(req.body.companyOrUser==="company"){
   // res.redirect("/signup/company")
