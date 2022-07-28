@@ -34,6 +34,9 @@ const MyServicesRouter = require('./routers/myservices')
 //block routers
 const blockRouter = require('./routers/block/block.users')
 const blockAdminRouter = require('./routers/block/block.admin')
+//reservationRouter
+const reservationRouter = require('./routers/reservation/reservation')
+const MyReservationRouter = require('./routers/reservation/my reservation')
 
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
@@ -42,8 +45,16 @@ const app = express();
 app.use(cors());
 app.use(morgan('dev'));
 
+// App Level MW
+app.use(cors());
+app.use(morgan("dev"));
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Application app");
@@ -76,6 +87,8 @@ app.use(discount);
 app.use(blockRouter);
 app.use(blockAdminRouter);
 app.use(facebook)
+app.use(reservationRouter)
+app.use(MyReservationRouter)
 //app.use(google)
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
