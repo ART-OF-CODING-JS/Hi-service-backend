@@ -5,7 +5,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-//const loger = require('./logger')
+const loger = require('./logger')
+// const PORT=process.env.PORT
 // facebook login require
 // // Esoteric Resources
 const logger = require("./middleware/logger");
@@ -37,6 +38,12 @@ const blockAdminRouter = require('./routers/block/block.admin')
 //reservationRouter
 const reservationRouter = require('./routers/reservation/reservation')
 const MyReservationRouter = require('./routers/reservation/my reservation')
+
+// report
+const reportRouter = require('./routers/reports/report')
+
+// report for admin
+const reportAdminRouter = require('./routers/reports/report.admin')
 
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
@@ -86,6 +93,8 @@ app.use(blockAdminRouter);
 app.use(facebook)
 app.use(reservationRouter)
 app.use(MyReservationRouter)
+app.use(reportRouter)
+app.use(reportAdminRouter)
 app.use(google)
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
