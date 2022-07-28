@@ -50,14 +50,16 @@ const userSchema = (sequelize, DataTypes) => {
       defaultValue: false,
     },
     usersBlockList:{
-      type:DataTypes.ARRAY(DataTypes.INTEGER)
+      type:DataTypes.ARRAY(DataTypes.INTEGER),
+      defaultValue:[]
 
     },
-  blocked:{
-type:DataTypes.BOOLEAN,
-defaultValue:false
-  },
-   role:{
+    blocked:{
+  type:DataTypes.BOOLEAN,
+  defaultValue:false
+    },
+   
+    role: {
       type: DataTypes.ENUM("admin", "writer", "editor", "user"),
       defaultValue:"user"
     },

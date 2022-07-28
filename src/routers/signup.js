@@ -14,7 +14,6 @@ authRouter.post('/signup', async (req, res) => {
     const passwordhash = await bcrypt.hash(password, 10);
 
     // add email
-
     const record = await users.create({ username: username, password: passwordhash, role: role, companyOrUser: companyOrUser, email: email, city: city, gender: gender, birthday: birthday, phoneNumber: phoneNumber, professions: professions });
     
     loger.info(record.username+" "+"signup", {timestamp: new Date().toString(),})
