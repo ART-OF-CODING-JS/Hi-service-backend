@@ -5,6 +5,7 @@ const {contactUs }= require('../models/index-model');
 const bearer = require('../middleware/bearer')
 
 const contactRouter = express.Router();
+const loger = require('../logger')
 
 contactRouter.post('/contactus',bearer ,async (req, res) => {
   
@@ -15,8 +16,10 @@ contactRouter.post('/contactus',bearer ,async (req, res) => {
     const description=req.body.description;
     
    const createContactUs=await contactUs.create({username: username, email: email,description:description});
+   //logger
+   loger.info(req.user.username+" "+"contact us with admin", {timestamp: new Date().toString(),});
    res.status(201).json(createContactUs);
-   console.log(createContactUs);
+ 
 
   } catch (err) {
     console.log(err);

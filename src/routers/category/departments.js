@@ -15,7 +15,10 @@ departRouter.post('/department',bearer,async(req, res)=>{
         const {department} = req.body;
       
       const departments = await service.findAll({where:{department:department}})
-      console.log(department)
+
+      // loger.info(findUser.username+" "+"is un blocked by admin ", {
+      //   timestamp: new Date().toString(),
+      // })
         res.status(201).json(departments);
     
     

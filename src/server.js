@@ -5,8 +5,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const loger = require('./logger')
-// const PORT=process.env.PORT
+//const loger = require('./logger')
 // facebook login require
 // // Esoteric Resources
 const logger = require("./middleware/logger");
@@ -14,7 +13,7 @@ const errorHandler = require("./errorhandler/500");
 const notFound = require("./errorhandler/404");
 const login = require("./routers/login");
 const signup = require("./routers/signup");
-const {authRouter}=require("./routers/signupCompany")
+const { authRouter } = require("./routers/signupCompany");
 // const signupCompany = require("./routers/signupCompany");
 
 const contactUs = require("./routers/contactUs");
@@ -27,30 +26,30 @@ const lastnews = require("./routers/lastNewServices");
 const aboutus = require("./routers/aboutus");
 const discount = require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
-const facebook=require("./facebooklog")
-const google=require("./google")
-const department = require('./routers/category/departments')
-const company=require("./routers/company-route")
-const MyServicesRouter = require('./routers/myservices')
+const facebook = require("./facebooklog");
+//const google=require("./google")
+const department = require("./routers/category/departments");
+const company = require("./routers/company-route");
+const MyServicesRouter = require("./routers/myservices");
 //block routers
-const blockRouter = require('./routers/block/block.users')
-const blockAdminRouter = require('./routers/block/block.admin')
+const blockRouter = require("./routers/block/block.users");
+const blockAdminRouter = require("./routers/block/block.admin");
 //reservationRouter
-const reservationRouter = require('./routers/reservation/reservation')
-const MyReservationRouter = require('./routers/reservation/my reservation')
+const reservationRouter = require("./routers/reservation/reservation");
+const MyReservationRouter = require("./routers/reservation/my reservation");
 
 // report
-const reportRouter = require('./routers/reports/report')
+const reportRouter = require("./routers/reports/report");
 
 // report for admin
-const reportAdminRouter = require('./routers/reports/report.admin')
+const reportAdminRouter = require("./routers/reports/report.admin");
 
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
 const app = express();
 app.use(cors());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 
 // App Level MW
 app.use(cors());
@@ -83,9 +82,9 @@ app.use(contactUs);
 app.use(mostRated);
 app.use(lastnews);
 app.use(deleteProfileRouter);
-app.use(authRouter)
+app.use(authRouter);
 app.use(department);
-app.use(company)
+app.use(company);
 // app.use(signupCompany);
 app.use(department);
 app.use(MyServicesRouter);
@@ -93,12 +92,12 @@ app.use(aboutus);
 app.use(discount);
 app.use(blockRouter);
 app.use(blockAdminRouter);
-app.use(facebook)
-app.use(reservationRouter)
-app.use(MyReservationRouter)
-app.use(reportRouter)
-app.use(reportAdminRouter)
-app.use(google)
+app.use(facebook);
+app.use(reservationRouter);
+app.use(MyReservationRouter);
+app.use(reportRouter);
+app.use(reportAdminRouter);
+//app.use(google)
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
 app.use("/api/v2", routerV2);
@@ -107,8 +106,19 @@ app.use(logger);
 app.use(notFound);
 app.use(errorHandler);
 
+//------------------------------------------------
+// Yasein
+const deleteProfile = require("./routers/auth/deleteProfile");
+const resetPassword = require("./routers/auth/resetPassword");
+const updatePassword = require("./routers/auth/updatePassword");
+const updateUsername = require("./routers/auth/updateUsername");
 
+app.use(deleteProfile);
+app.use(resetPassword);
+app.use(updatePassword);
+app.use(updateUsername);
 
+//------------------------------------------------
 
 module.exports = {
   server: app,

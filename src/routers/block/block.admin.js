@@ -4,6 +4,7 @@ const blockRouter = express.Router();
 
 const { users } = require("../../models/index-model");
 const bearer = require("../../middleware/bearer");
+const loger = require('../../logger')
 
 // **block for admin**
 
@@ -25,7 +26,9 @@ async function handelBlock(req, res) {
     const addToBlock = await findUser.update({
       blocked: true,
     });
-
+    loger.info(findUser.username+" "+"is blocked by admin ", {
+      timestamp: new Date().toString(),
+    })
     res.status(202).send("Block successfully");
   } catch (err) {
     console.log(err);
@@ -46,7 +49,9 @@ async function handelUnblock(req, res) {
     const addToBlock = await findUser.update({
       blocked: false,
     });
-
+    loger.info(findUser.username+" "+"is un blocked by admin ", {
+      timestamp: new Date().toString(),
+    })
     res.status(202).send("unBlock successfully");
   } catch (err) {
     console.log(err);

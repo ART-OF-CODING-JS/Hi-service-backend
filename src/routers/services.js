@@ -13,6 +13,7 @@ router.get("/service/:id", bearer, handleGetOne);
 router.post("/service", bearer, handleCreate);
 router.put("/service/:id", bearer, handleUpdate);
 router.delete("/service/:id", bearer, handleDelete);
+const loger = require('../logger')
 
 // Get All Records
 async function handleGetAll(req, res) {
