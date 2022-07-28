@@ -13,6 +13,7 @@ router.get("/service/:id", bearer, handleGetOne);
 router.post("/service", bearer, handleCreate);
 router.put("/service/:id", bearer, handleUpdate);
 router.delete("/service/:id", bearer, handleDelete);
+const loger = require('../logger')
 
 // Get All Records
 async function handleGetAll(req, res) {
@@ -23,8 +24,11 @@ async function handleGetAll(req, res) {
   let allRecords = await service.findAll({
     where: {userID:{[Op.notIn]: findUser.usersBlockList} },
   });
-  
-  res.status(200).json(allRecords);
+
+  // loger.info(req.user.username+" "+"get all services", {
+  //   timestamp: new Date().toString(),
+  // })
+   res.status(200).json(allRecords);
 }
 
 // Get one Records

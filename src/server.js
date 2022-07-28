@@ -5,7 +5,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const loger = require('./logger')
+//const loger = require('./logger')
 // facebook login require
 // // Esoteric Resources
 const logger = require("./middleware/logger");
@@ -92,7 +92,7 @@ module.exports = {
   server: app,
   start: (PORT) => {
     app.listen(PORT, () => {
-      console.log(`Server Up on ${PORT}`);
+     console.log(`Server Up on ${PORT}`);
     });
   },
 };
