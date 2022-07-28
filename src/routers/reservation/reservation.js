@@ -36,6 +36,11 @@ async function handelDeleteRequest(req, res) {
 
 const {id,serviceID} = req.params
 const tokenId = req.user.id
+
+// to handle admin access
+if(req.user.role === 'admin'){
+  
+}
 const check = await reservation.findOne({where:[{userID:tokenId},{serviceID:serviceID}]})
 if(!check) res.status(404).send('Error')
 const deleteRequest = await check.destroy(id)

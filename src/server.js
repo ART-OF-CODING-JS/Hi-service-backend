@@ -38,6 +38,12 @@ const blockAdminRouter = require('./routers/block/block.admin')
 const reservationRouter = require('./routers/reservation/reservation')
 const MyReservationRouter = require('./routers/reservation/my reservation')
 
+// report
+const reportRouter = require('./routers/reports/report')
+
+// report for admin
+const reportAdminRouter = require('./routers/reports/report.admin')
+
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
@@ -89,6 +95,8 @@ app.use(blockAdminRouter);
 app.use(facebook)
 app.use(reservationRouter)
 app.use(MyReservationRouter)
+app.use(reportRouter)
+app.use(reportAdminRouter)
 //app.use(google)
 // app.use(searchBar)
 // // app.use('/users',authRoutes);

@@ -12,6 +12,8 @@ const interactionsModel = require("./interactions");
 const paymentModel = require("./credit card");
 const companyModel = require("./company");
 const reservationModel = require("./Reservation");
+const reportModel = require("./report");
+
 
 const DATABASE_URL = process.env.NODE_ENV === "test" ? "sqlite::memory" : process.env.DATABASE_URL;
 
@@ -35,6 +37,7 @@ const payment = paymentModel(sequelize, DataTypes);
 const contactUs = contactUsModel(sequelize, DataTypes);
 const company = companyModel(sequelize, DataTypes);
 const reservation = reservationModel(sequelize, DataTypes);
+const report = reportModel(sequelize, DataTypes);
 
 //....relationships one to many........
 // service
@@ -68,7 +71,7 @@ interactions.belongsTo(service, {
   targetKey: "id",
 });
 
-// reservation 
+// ****reservation ***
 // relation between reservation and users
 users.hasMany(reservation, {
   foreignKey: "userID",
@@ -90,7 +93,28 @@ reservation.belongsTo(service, {
   targetKey: "id",
 });
 
+// **** report*****
+ // relation between report and userID and ServiceID
+ 
+ users.hasMany(report, {
+  foreignKey: "userID",
+  targetKey: "id",
+});
+report.belongsTo(users, {
+  foreignKey: "userID",
+  targetKey: "id",
+});
 
+
+
+service.hasMany(report, {
+  foreignKey: "serviceID",
+  targetKey: "id",
+});
+report.belongsTo(service, {
+  foreignKey: "serviceID",
+  targetKey: "id",
+});
 
 
 module.exports = {
@@ -102,4 +126,5 @@ module.exports = {
   contactUs: contactUs,
   company: company,
   reservation:reservation,
+  report:report,
 };

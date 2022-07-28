@@ -34,6 +34,11 @@ const services = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    reportsCounter:{
+      type:DataTypes.INTEGER,
+      defaultValue:0
+
+    },
     userID: {
       type: DataTypes.INTEGER,
     },
