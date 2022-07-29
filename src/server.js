@@ -35,8 +35,9 @@ const MyServicesRouter = require("./routers/myservices");
 const blockRouter = require("./routers/block/block.users");
 const blockAdminRouter = require("./routers/block/block.admin");
 //reservationRouter
-const reservationRouter = require("./routers/reservation/reservation");
-const MyReservationRouter = require("./routers/reservation/my reservation");
+const reservationRouter = require('./routers/reservation/reservation')
+const MyReservationRouter = require('./routers/reservation/my reservation')
+const userReservationRouter = require('./routers/reservation/userReservations')
 
 // report
 const reportRouter = require("./routers/reports/report");
@@ -92,11 +93,12 @@ app.use(aboutus);
 app.use(discount);
 app.use(blockRouter);
 app.use(blockAdminRouter);
-app.use(facebook);
-app.use(reservationRouter);
-app.use(MyReservationRouter);
-app.use(reportRouter);
-app.use(reportAdminRouter);
+app.use(facebook)
+app.use(reservationRouter)
+app.use(MyReservationRouter)
+app.use(userReservationRouter)
+app.use(reportRouter)
+app.use(reportAdminRouter)
 //app.use(google)
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
