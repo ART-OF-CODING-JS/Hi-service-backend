@@ -1,27 +1,29 @@
-'use strict';
+"use strict";
 
 const { reservation, service } = require("../../models/index-model");
 const express = require("express");
 const userReservationRouter = express.Router();
 const bearer = require("../../middleware/bearer");
 
-userReservationRouter.get('/userReservations',bearer,handeluserReservations)
+userReservationRouter.get("/userReservations", bearer, handleUserReservations);
 
-////// user  can read all reservation..
-async function handeluserReservations(req,res){
+//user  can read all reservations..
+async function handleUserReservations(req, res) {
+  const token = req.user.id;
 
-const token = req.user.id
+  const myReservations = await reservation.findAll({
+    where: { userID: token },
+  });
 
-const myreservations = await reservation.findAll({where:{userID:token}})
+  let array = [];
+  for (const iterator of myReservations) {
+    array.push(iterator.serviceID);
+  }
 
-let array = [];
-    for (const iterator of myreservations) {
-      array.push(iterator.serviceID);
-    }  
-      
-const myreservationsServices = await service.findAll({ where: { id: array } })
+  const myReservationsServices = await reservation.findAll({
+    where: { id: array },
+  });
 
-res.status(200).send(myreservationsServices)
-
+  res.status(200).send(myReservationsServices);
 }
-module.exports = userReservationRouter
+module.exports = userReservationRouter;

@@ -17,7 +17,7 @@ reservationRouter.put("/reject/:id", bearer, handelReject);
 
 // send request from user
 async function handelReservation(req, res) {
-  const { userID, serviceID, description, date } = req.body;
+  const { userID, serviceID, description, date , time} = req.body;
 
   const fineUser = await users.findAll({ where: { id: userID } });
 
@@ -26,6 +26,7 @@ async function handelReservation(req, res) {
     userID: userID,
     serviceID: serviceID,
     description: description,
+    time:time,
   });
 
   res.status(201).send(createNewReservation);

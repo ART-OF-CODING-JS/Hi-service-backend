@@ -7,7 +7,7 @@ reportAdminRouter.get("/readReports", bearer, handleReadReports);
 reportAdminRouter.put("/confirmReport/:id", bearer, handleConfirmReports);
 reportAdminRouter.put("/rejectReport/:id", bearer, handleRejectReports);
 
-// read reports for admin
+// read all reports for admin
 
 async function handleReadReports(req, res) {
   const role = req.user.role;
