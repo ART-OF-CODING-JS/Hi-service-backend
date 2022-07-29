@@ -36,7 +36,7 @@ const blockRouter = require("./routers/block/block.users");
 const blockAdminRouter = require("./routers/block/block.admin");
 //reservationRouter
 const reservationRouter = require('./routers/reservation/reservation')
-const MyReservationRouter = require('./routers/reservation/my reservation')
+const MyReservationRouter = require('./routers/reservation/serviceProvider')
 const userReservationRouter = require('./routers/reservation/userReservations')
 
 // report

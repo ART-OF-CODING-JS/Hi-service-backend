@@ -6,7 +6,11 @@ const reportRouter = express.Router();
 const bearer = require("../../middleware/bearer");
 
 reportRouter.post("/report", bearer, handleReport);
+reportRouter.get("/userReports", bearer, handleReadAllUsersReports);
 
+
+
+// user send report to admin
 async function handleReport(req, res) {
   const { description, userID, serviceID } = req.body;
 
@@ -27,6 +31,18 @@ if(!check ||check.status === 'confirm' || check.status === 'reject'){
 }else{
     res.status(404).send("You are already reported this service")
 }
+
+}
+
+// user can read all his reports
+
+async function handleReadAllUsersReports(req,res){
+
+  const tokenId = req.user.id;
+  const getAllReports = await report.findAll({where:{userID:tokenId}})
+
+  res.status(200).send(getAllReports)
+
 
 }
 
