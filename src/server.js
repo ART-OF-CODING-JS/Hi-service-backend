@@ -37,6 +37,7 @@ const blockAdminRouter = require('./routers/block/block.admin')
 //reservationRouter
 const reservationRouter = require('./routers/reservation/reservation')
 const MyReservationRouter = require('./routers/reservation/my reservation')
+const userReservationRouter = require('./routers/reservation/userReservations')
 
 // report
 const reportRouter = require('./routers/reports/report')
@@ -95,6 +96,7 @@ app.use(blockAdminRouter);
 app.use(facebook)
 app.use(reservationRouter)
 app.use(MyReservationRouter)
+app.use(userReservationRouter)
 app.use(reportRouter)
 app.use(reportAdminRouter)
 //app.use(google)
