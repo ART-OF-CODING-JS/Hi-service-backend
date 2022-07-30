@@ -44,7 +44,7 @@ const services = (sequelize, DataTypes) => {
     },
   });
 
-  // search by name profession
+  // search by titel
   model.searchService = async function (searchTerm) {
     const users = await model.findAll({
       where: {
