@@ -63,8 +63,17 @@ async function handleRejectReports(req, res) {
     res.status(404).send("Access denied");
     return;
   }
-  const findReport = await report.findOne({ where: { id: id } });
 
+  const findReport = await report.findOne({ where: { id: id } });
+  const findService = await service.findOne({
+    where: { id: findReport.serviceID },
+  });
+
+
+   if(findReport.status !== null){
+  const increaseCounter = await findService.decrement("reportsCounter");
+    
+   }
   const updateStatus = await findReport.update({ status: "reject" });
   res.status(201).send("The report reject successfully");
 }

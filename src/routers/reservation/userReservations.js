@@ -1,6 +1,6 @@
 "use strict";
 
-const { reservation, service } = require("../../models/index-model");
+const { reservation } = require("../../models/index-model");
 const express = require("express");
 const userReservationRouter = express.Router();
 const bearer = require("../../middleware/bearer");
@@ -15,15 +15,6 @@ async function handleUserReservations(req, res) {
     where: { userID: token },
   });
 
-  let array = [];
-  for (const iterator of myReservations) {
-    array.push(iterator.serviceID);
-  }
-
-  const myReservationsServices = await reservation.findAll({
-    where: { id: array },
-  });
-
-  res.status(200).send(myReservationsServices);
+  res.status(200).send(myReservations);
 }
 module.exports = userReservationRouter;
