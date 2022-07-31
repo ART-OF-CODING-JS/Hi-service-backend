@@ -34,7 +34,12 @@ async function handleGetOne(req, res) {
 
   let readOne = await service.findOne({ where: { id: id } });
   console.log("time is", readOne.createdAt);
-  res.status(200).json(readOne);
+  
+  const recommendedServices = await service.findAll({where:[{city:readOne.city},{department:readOne.department}], limit: 8 })
+  console.log(recommendedServices);
+  res.status(200).send([readOne,recommendedServices]);
+
+
 }
 
 // Create records
