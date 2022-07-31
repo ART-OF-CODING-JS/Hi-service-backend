@@ -49,8 +49,6 @@ const reportAdminRouter = require("./routers/reports/report.admin");
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
 const app = express();
-app.use(cors());
-app.use(morgan("dev"));
 
 // App Level MW
 app.use(cors());
