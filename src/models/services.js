@@ -54,6 +54,15 @@ const services = (sequelize, DataTypes) => {
 
     return users;
   };
+  model.searchCity = async function (searchCity) {
+    const search = await model.findAll({
+      where: {
+        city: { [Op.like]: "%" + searchCity + "%" },
+      },
+    });
+
+    return search;
+  };
   return model;
 };
 module.exports = services;
