@@ -6,7 +6,7 @@ const reservationRouter = express.Router();
 const bearer = require("../../middleware/bearer");
 // for user
 reservationRouter.post("/sendRequest", bearer, handelReservation);
-reservationRouter.delete("/deleteRequest/:id/:serviceID", bearer, handelDeleteRequest);
+reservationRouter.delete("/deleteRequest/:id", bearer, handelDeleteRequest);
 // for user provider
 
 reservationRouter.put("/confirm/:id", bearer, handelConfirm);
@@ -17,7 +17,7 @@ reservationRouter.put("/reject/:id", bearer, handelReject);
 
 // send request from user
 async function handelReservation(req, res) {
-  const { userID, serviceID, description, date } = req.body;
+  const { userID, serviceID, description, date , time} = req.body;
 
   const fineUser = await users.findAll({ where: { id: userID } });
 
@@ -26,6 +26,7 @@ async function handelReservation(req, res) {
     userID: userID,
     serviceID: serviceID,
     description: description,
+    time:time,
   });
 
   res.status(201).send(createNewReservation);
@@ -34,18 +35,22 @@ async function handelReservation(req, res) {
 // delete request from user
 async function handelDeleteRequest(req, res) {
 
-const {id,serviceID} = req.params
+const {id} = req.params
 const tokenId = req.user.id
 
+const findUserId = await reservation.findOne({where:{id:id}})
+
+
 // to handle admin access
-if(req.user.role === 'admin'){
+if(tokenId === findUserId.userID  || req.user.role === 'admin'){
+  const check = await reservation.destroy({where:{id:id}})
+
+  if(!check) res.status(404).send('Error')
+  res.status(204).send('deleted')
+  }else{
+    res.status(404).send('Access denied')
+  }
   
-}
-const check = await reservation.findOne({where:[{userID:tokenId},{serviceID:serviceID}]})
-if(!check) res.status(404).send('Error')
-const deleteRequest = await check.destroy(id)
-console.log('!!!!!!!!!!',deleteRequest);
-res.status(204).send('deleted')
 }
 
 
