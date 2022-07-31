@@ -26,8 +26,6 @@ if(req.body.companyOrUser==="company"){
   companyForm()
 }
     
-
-    res.status(201).json(record);
   } catch (err) {
     console.log(err);
   }
