@@ -14,14 +14,14 @@ const token = req.user.id
 
 const myreservations = await reservation.findAll({where:{userID:token}})
 
-let array = [];
-    for (const iterator of myreservations) {
-      array.push(iterator.serviceID);
-    }  
+// let array = [];
+//     for (const iterator of myreservations) {
+//       array.push(iterator.serviceID);
+//     }  
       
-const myreservationsServices = await service.findAll({ where: { id: array } })
+// const myreservationsServices = await service.findAll({ where: { id: array } })
 
-res.status(200).send(myreservationsServices)
+res.status(200).send(myreservations)
 
 }
 module.exports = userReservationRouter
