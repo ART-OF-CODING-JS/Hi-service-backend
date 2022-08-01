@@ -26,6 +26,8 @@ if(req.body.companyOrUser==="company"){
   companyForm()
 }
     
+
+
   } catch (err) {
     console.log(err);
   }

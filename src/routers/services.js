@@ -18,11 +18,15 @@ const loger = require('../logger')
 // Get All Records
 async function handleGetAll(req, res) {
   const tokenId = req.user.id;
+
   const findUser = await users.findOne({ where: { id: tokenId } });
-  let allRecords = await service.findAll();
+
+  let allRecords = await service.findAll({
+    where: {userID:{[Op.notIn]: findUser.usersBlockList} },
+  });
   
-  // console.log({allRecords});
   res.status(200).json(allRecords);
+  
 }
 
 // Get one Records
@@ -31,7 +35,13 @@ async function handleGetOne(req, res) {
 
   let readOne = await service.findOne({ where: { id: id } });
   console.log("time is", readOne.createdAt);
-  res.status(200).json(readOne);
+  
+  // handle recommended services 
+  const recommendedServices = await service.findAll({where:  [{city:readOne.city},{department:readOne.department},{id:{[Op.ne]: id}} ], limit: 8 })
+  console.log(recommendedServices);
+  res.status(200).send([readOne,recommendedServices]);
+
+
 }
 
 // Create records
