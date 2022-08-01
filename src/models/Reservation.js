@@ -5,9 +5,9 @@ const reservation = (sequelize, DataTypes) =>
     date: {
       type: DataTypes.DATE,
     },
-    // time: {
-    //   type: DataTypes.TIME,
-    // },
+    time: {
+      type: DataTypes.TIME,
+    },
     description: {
       type: DataTypes.STRING,
     },
