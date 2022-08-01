@@ -27,7 +27,7 @@ if(req.body.companyOrUser==="company"){
 }
     
 
-    res.status(201).json(record);
+
   } catch (err) {
     console.log(err);
   }
