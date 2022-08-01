@@ -26,6 +26,7 @@ async function handleGetAll(req, res) {
   });
   
   res.status(200).json(allRecords);
+  
 }
 
 // Get one Records
@@ -50,17 +51,25 @@ async function handleCreate(req, res) {
   let services;
   // just for service model to check if user has more than 3 ,..,.. services
   services = await service.paymentFunction(tokenId); // function to get number of services
+
+ console.log("111111111",req.body.userID)
   if (
     services.numberService < 3 ||
     services.foundUser.didPay ||
-    req.user.role === "admin"
+    req.user.role === "admin" 
   ) {
+    if(req.body.userID==tokenId){
     let newRecord = await service.create(obj);
     res.status(201).json(newRecord);
+  }
+  else{
+    res.status(404).send("you are not allowed to post here")
+  }
   } else {
     res.status(404).send("You should pay !!");
     // in frontend we should render payment page
   }
+
 }
 
 // Update records
