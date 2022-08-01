@@ -5,6 +5,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const path=require("path")
 //const loger = require('./logger')
 // facebook login require
 // // Esoteric Resources
@@ -31,6 +32,7 @@ const google=require("./google")
 const department = require("./routers/category/departments");
 const company = require("./routers/company-route");
 const MyServicesRouter = require("./routers/myservices");
+const citySearch=require("./routers/searchByCity")
 //block routers
 const blockRouter = require("./routers/block/block.users");
 const blockAdminRouter = require("./routers/block/block.admin");
@@ -67,12 +69,17 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
   res.sendFile(__dirname + "/signin.html");
 });
+
+// app.use(express.static(path.join(__dirname,"../log")));
+
 app.get("/home", (req, res) => {
   res.send("welcome to my secret page");
 });
 
 // Routes
+
 app.use("/search", Search);
+app.use("/search", citySearch);
 app.use("/users", signup);
 app.use("/users", login);
 app.use(paymentRouter);
