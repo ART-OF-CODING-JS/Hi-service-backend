@@ -7,6 +7,13 @@ const cors = require("cors");
 const morgan = require("morgan");
 const path = require("path");
 const loger = require("./logger");
+//////chat////
+
+const app = express();
+
+const server = require("http").createServer(app);
+
+const io = require("socket.io")(server);
 // facebook login require
 // // Esoteric Resources
 const logger = require("./middleware/logger");
@@ -50,7 +57,7 @@ const reportAdminRouter = require("./routers/reports/report.admin");
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
-const app = express();
+
 
 // App Level MW
 app.use(cors());
@@ -108,6 +115,26 @@ app.use(google);
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
 app.use("/api/v2", routerV2);
+
+//////chat///
+app.use(express.static(path.join(__dirname,"public")));
+app.get('/chat', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+  });
+
+io.on("connection", function(socket){
+	socket.on("newuser",function(username){
+		socket.broadcast.emit("update", username + " joined the conversation");
+	});
+	socket.on("exituser",function(username){
+		socket.broadcast.emit("update", username + " left the conversation");
+	});
+	socket.on("chat",function(message){
+		socket.broadcast.emit("chat", message);
+	});
+});
+
+
 // // Catchalls
 app.use(logger);
 app.use(notFound);
@@ -116,7 +143,7 @@ app.use(errorHandler);
 module.exports = {
   server: app,
   start: (PORT) => {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server Up on ${PORT}`);
     });
   },
