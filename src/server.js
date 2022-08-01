@@ -5,8 +5,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const path=require("path")
-//const loger = require('./logger')
+const path = require("path");
+const loger = require("./logger");
 // facebook login require
 // // Esoteric Resources
 const logger = require("./middleware/logger");
@@ -28,18 +28,18 @@ const aboutus = require("./routers/aboutus");
 const discount = require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
 const facebook = require("./facebooklog");
-const google=require("./google")
+const google = require("./google");
 const department = require("./routers/category/departments");
 const company = require("./routers/company-route");
 const MyServicesRouter = require("./routers/myservices");
-const citySearch=require("./routers/searchByCity")
+const citySearch = require("./routers/searchByCity");
 //block routers
 const blockRouter = require("./routers/block/block.users");
 const blockAdminRouter = require("./routers/block/block.admin");
 //reservationRouter
-const reservationRouter = require('./routers/reservation/reservation')
-const MyReservationRouter = require('./routers/reservation/serviceProvider')
-const userReservationRouter = require('./routers/reservation/userReservations')
+const reservationRouter = require("./routers/reservation/reservation");
+const MyReservationRouter = require("./routers/reservation/serviceProvider");
+const userReservationRouter = require("./routers/reservation/userReservations");
 
 // report
 const reportRouter = require("./routers/reports/report");
@@ -98,13 +98,13 @@ app.use(aboutus);
 app.use(discount);
 app.use(blockRouter);
 app.use(blockAdminRouter);
-app.use(facebook)
-app.use(reservationRouter)
-app.use(MyReservationRouter)
-app.use(userReservationRouter)
-app.use(reportRouter)
-app.use(reportAdminRouter)
-app.use(google)
+app.use(facebook);
+app.use(reservationRouter);
+app.use(MyReservationRouter);
+app.use(userReservationRouter);
+app.use(reportRouter);
+app.use(reportAdminRouter);
+app.use(google);
 // app.use(searchBar)
 // // app.use('/users',authRoutes);
 app.use("/api/v2", routerV2);
@@ -112,20 +112,6 @@ app.use("/api/v2", routerV2);
 app.use(logger);
 app.use(notFound);
 app.use(errorHandler);
-
-//------------------------------------------------
-// Yasein
-const deleteProfile = require("./routers/auth/deleteProfile");
-const resetPassword = require("./routers/auth/resetPassword");
-const updatePassword = require("./routers/auth/updatePassword");
-const updateUsername = require("./routers/auth/updateUsername");
-
-app.use(deleteProfile);
-app.use(resetPassword);
-app.use(updatePassword);
-app.use(updateUsername);
-
-//------------------------------------------------
 
 module.exports = {
   server: app,
