@@ -5,6 +5,7 @@ const express = require('express');
 const { service }= require('../models/index-model');
 const bearer = require('../middleware/bearer')
 const lastNewRouter = express.Router();
+const loger = require('../logger')
 
  lastNewRouter.get('/lastnews',bearer,async (req, res) => {
    
@@ -14,6 +15,8 @@ const lastNewRouter = express.Router();
             order: [['createdAt', 'DESC']]
         }
     );
+    //logger//
+    loger.info(req.user.username+" "+"get last services", { timestamp: new Date().toString(),})
     res.status(200).json(allRecords);
     
     

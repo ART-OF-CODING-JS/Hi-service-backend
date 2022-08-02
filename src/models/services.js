@@ -44,7 +44,7 @@ const services = (sequelize, DataTypes) => {
     },
   });
 
-  // search by name profession
+  // search by titel
   model.searchService = async function (searchTerm) {
     const users = await model.findAll({
       where: {
@@ -53,6 +53,15 @@ const services = (sequelize, DataTypes) => {
     });
 
     return users;
+  };
+  model.searchCity = async function (searchCity) {
+    const search = await model.findAll({
+      where: {
+        city: { [Op.like]: "%" + searchCity + "%" },
+      },
+    });
+
+    return search;
   };
   return model;
 };

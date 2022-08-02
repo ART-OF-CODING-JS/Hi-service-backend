@@ -13,15 +13,20 @@ router.get("/service/:id", bearer, handleGetOne);
 router.post("/service", bearer, handleCreate);
 router.put("/service/:id", bearer, handleUpdate);
 router.delete("/service/:id", bearer, handleDelete);
+const loger = require('../logger')
 
 // Get All Records
 async function handleGetAll(req, res) {
   const tokenId = req.user.id;
+
   const findUser = await users.findOne({ where: { id: tokenId } });
-  let allRecords = await service.findAll();
+
+  let allRecords = await service.findAll({
+    where: {userID:{[Op.notIn]: findUser.usersBlockList} },
+  });
   
-  // console.log({allRecords});
   res.status(200).json(allRecords);
+  
 }
 
 // Get one Records
@@ -30,7 +35,13 @@ async function handleGetOne(req, res) {
 
   let readOne = await service.findOne({ where: { id: id } });
   console.log("time is", readOne.createdAt);
-  res.status(200).json(readOne);
+  
+  // handle recommended services 
+  const recommendedServices = await service.findAll({where:  [{city:readOne.city},{department:readOne.department},{id:{[Op.ne]: id}} ], limit: 8 })
+  console.log(recommendedServices);
+  res.status(200).send([readOne,recommendedServices]);
+
+
 }
 
 // Create records
@@ -40,17 +51,25 @@ async function handleCreate(req, res) {
   let services;
   // just for service model to check if user has more than 3 ,..,.. services
   services = await service.paymentFunction(tokenId); // function to get number of services
+
+ console.log("111111111",req.body.userID)
   if (
     services.numberService < 3 ||
     services.foundUser.didPay ||
-    req.user.role === "admin"
+    req.user.role === "admin" 
   ) {
+    if(req.body.userID==tokenId){
     let newRecord = await service.create(obj);
     res.status(201).json(newRecord);
+  }
+  else{
+    res.status(404).send("you are not allowed to post here")
+  }
   } else {
     res.status(404).send("You should pay !!");
     // in frontend we should render payment page
   }
+
 }
 
 // Update records
