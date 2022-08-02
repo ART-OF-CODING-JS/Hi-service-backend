@@ -16,9 +16,9 @@ reservationRouter.put("/reject/:id", bearer, handelReject);
 // send request from user
 async function handelReservation(req, res) {
   const { userID, serviceID, description, date, time } = req.body;
-
+  const tokenId = req.user.id;
   const fineUser = await users.findAll({ where: { id: userID } });
-
+  if(req.body.userID==tokenId || (req.user.role === 'admin')){
   const createNewReservation = await reservation.create({
     date: date,
     userID: userID,
@@ -26,12 +26,17 @@ async function handelReservation(req, res) {
     description: description,
     time: time,
   });
-
+ 
+  
   loger.info(`${req.user.username} has send reservation request`, {
     timestamp: new Date().toString(),
   });
 
-  res.status(201).send(createNewReservation);
+  res.status(201).send(createNewReservation);}
+  else{
+    res.status(404).send("you are not allowed to post here")
+  }
+  
 }
 
 // delete request from user

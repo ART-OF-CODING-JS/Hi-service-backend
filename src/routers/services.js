@@ -69,6 +69,13 @@ async function handleCreate(req, res) {
     services.foundUser.didPay ||
     req.user.role === "admin"
   ) {
+    if(req.body.userID==tokenId || req.user.role === "admin"  ){
+    let newRecord = await service.create(obj);
+    res.status(201).json(newRecord);
+  }
+  else{
+    res.status(404).send("you are not allowed to post here")
+  }
     if (req.body.userID == tokenId) {
       let newRecord = await service.create(obj);
       res.status(201).json({
