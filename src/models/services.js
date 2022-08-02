@@ -39,6 +39,10 @@ const services = (sequelize, DataTypes) => {
       defaultValue:0
 
     },
+    status: {
+      type: DataTypes.ENUM('confirm', 'reject'),
+   
+    },
     userID: {
       type: DataTypes.INTEGER,
     },

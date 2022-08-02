@@ -96,8 +96,9 @@ async function handleUpdate(req, res) {
   const found = await service.findOne({ where: { id: ID } });
 
   if (tokenId === found.userID || (role == "admin" && found)) {
-    let updates = await found.update({newUpdate ,status:null});
-    res.status(201).json(updates);
+    let updatesStatus = await found.update({status:null});
+    let updatesService = await found.update(newUpdate);
+    res.status(201).json(updatesService);
   } else {
     res.status(404).send("can't find the user !");
   }
