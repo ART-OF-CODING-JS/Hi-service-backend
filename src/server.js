@@ -28,7 +28,8 @@ const aboutus = require("./routers/aboutus");
 const discount = require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
 const facebook = require("./facebooklog");
-const google=require("./google")
+// const google=require("./google")
+
 const department = require("./routers/category/departments");
 const company = require("./routers/company-route");
 const MyServicesRouter = require("./routers/myservices");
@@ -46,6 +47,9 @@ const reportRouter = require("./routers/reports/report");
 
 // report for admin
 const reportAdminRouter = require("./routers/reports/report.admin");
+
+// admin confirm The services
+ const stateUSServicesRouter = require('./routers/services/statusService')
 
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
@@ -104,9 +108,10 @@ app.use(MyReservationRouter)
 app.use(userReservationRouter)
 app.use(reportRouter)
 app.use(reportAdminRouter)
-app.use(google)
-// app.use(searchBar)
+app.use(reportAdminRouter)
+// app.use(google)
 // // app.use('/users',authRoutes);
+ app.use(stateUSServicesRouter)
 app.use("/api/v2", routerV2);
 // // Catchalls
 app.use(logger);
