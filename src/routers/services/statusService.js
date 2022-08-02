@@ -6,8 +6,8 @@ const { service } = require("../../models/index-model");
 const bearer = require("../../middleware/bearer");
 
 
-StatusRouter.get("/all", bearer, handleGetAlls);
-StatusRouter.put("/all/:id", bearer, handleUpdateStatus);
+StatusRouter.get("/allServiceAdmin", bearer, handleGetAlls);
+StatusRouter.put("/allServiceAdmin/:id", bearer, handleUpdateStatus);
 
 async function handleGetAlls(req, res) {
   console.log(req.user.role === "admin");
