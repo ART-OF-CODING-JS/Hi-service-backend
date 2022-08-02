@@ -94,7 +94,7 @@ async function handleUpdate(req, res) {
   let ID = req.params.id;
     const found = await  req.model.findOne({where:{id:ID}}) 
   if( (req.user.role === 'admin') ||( req.model !== dataModules.users )){
-
+ console.log(found.userID,tokenId)
     if (( tokenId === found.userID ) || (role == "admin" && found)) {
        let updates = await found.update(newUpdate)
        res.status(201).json(updates)

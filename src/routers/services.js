@@ -58,7 +58,7 @@ async function handleCreate(req, res) {
     services.foundUser.didPay ||
     req.user.role === "admin" 
   ) {
-    if(req.body.userID==tokenId){
+    if(req.body.userID==tokenId || req.user.role === "admin"  ){
     let newRecord = await service.create(obj);
     res.status(201).json(newRecord);
   }
