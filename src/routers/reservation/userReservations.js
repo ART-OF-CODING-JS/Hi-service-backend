@@ -15,6 +15,7 @@ async function handleUserReservations(req, res) {
     where: { userID: token },
   });
 
+  
   res.status(200).send(myReservations);
 }
 module.exports = userReservationRouter;

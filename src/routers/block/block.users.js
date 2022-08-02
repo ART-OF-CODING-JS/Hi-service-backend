@@ -31,7 +31,6 @@ async function handelUnblock(req, res) {
 
   const tokenId = req.user.id;
   const findUser = await users.findOne({ where: { id: tokenId } });
-console.log('@@@@@@@@@@@@@@',{findUser});
   const addToBlockList = await findUser.update({
     usersBlockList: Sequelize.fn("array_remove", Sequelize.col("usersBlockList"), userId),
   });
