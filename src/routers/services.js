@@ -76,15 +76,7 @@ async function handleCreate(req, res) {
   else{
     res.status(404).send("you are not allowed to post here")
   }
-    if (req.body.userID == tokenId) {
-      let newRecord = await service.create(obj);
-      res.status(201).json({
-        status: "Please wait until admin confirm your service !",
-        service: newRecord,
-      });
-    } else {
-      res.status(404).send("you are not allowed to post here");
-    }
+  
   } else {
     res.status(404).send("You should pay !!");
     // in frontend we should render payment page
