@@ -1,7 +1,7 @@
 "use strict";
 
-const ctions = (sequelize, DataTypes) =>
-  sequelize.define("ctions", {
+const interactions = (sequelize, DataTypes) =>
+  sequelize.define("interactions", {
     addToFavorite: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
@@ -23,4 +23,4 @@ const ctions = (sequelize, DataTypes) =>
     },
   });
 
-module.exports = ctions;
+module.exports = interactions;

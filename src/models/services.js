@@ -39,12 +39,16 @@ const services = (sequelize, DataTypes) => {
       defaultValue:0
 
     },
+    status: {
+      type: DataTypes.ENUM('confirm', 'reject'),
+   
+    },
     userID: {
       type: DataTypes.INTEGER,
     },
   });
 
-  // search by titel
+  // search by title
   model.searchService = async function (searchTerm) {
     const users = await model.findAll({
       where: {

@@ -13,7 +13,7 @@ router.get("/service/:id", bearer, handleGetOne);
 router.post("/service", bearer, handleCreate);
 router.put("/service/:id", bearer, handleUpdate);
 router.delete("/service/:id", bearer, handleDelete);
-const loger = require('../logger')
+const loger = require("../logger");
 
 // Get All Records
 async function handleGetAll(req, res) {
@@ -22,26 +22,38 @@ async function handleGetAll(req, res) {
   const findUser = await users.findOne({ where: { id: tokenId } });
 
   let allRecords = await service.findAll({
-    where: {userID:{[Op.notIn]: findUser.usersBlockList} },
+    where: [
+      { userID: { [Op.notIn]: findUser.usersBlockList } },
+      { status: "confirm" },
+    ],
   });
-  
+
   res.status(200).json(allRecords);
-  
 }
 
 // Get one Records
 async function handleGetOne(req, res) {
   const id = req.params.id;
 
-  let readOne = await service.findOne({ where: { id: id } });
-  console.log("time is", readOne.createdAt);
-  
-  // handle recommended services 
-  const recommendedServices = await service.findAll({where:  [{city:readOne.city},{department:readOne.department},{id:{[Op.ne]: id}} ], limit: 8 })
-  console.log(recommendedServices);
-  res.status(200).send([readOne,recommendedServices]);
+  let readOne = await service.findOne({
+    where: [{ id: id }, { status: "confirm" }],
+  });
+  console.log("time is", readOne);
 
+  if (!readOne) res.status(404).send("Error");
+  // handle recommended services
+  const recommendedServices = await service.findAll({
+    where: [
+      { city: readOne.city },
+      { department: readOne.department },
+      { id: { [Op.ne]: id } },{status:'confirm'}
+    ],
+    limit: 8,
+  });
 
+  res.status(200).send([readOne, recommendedServices]);
+
+  console.log(err);
 }
 
 // Create records
@@ -52,24 +64,25 @@ async function handleCreate(req, res) {
   // just for service model to check if user has more than 3 ,..,.. services
   services = await service.paymentFunction(tokenId); // function to get number of services
 
- console.log("111111111",req.body.userID)
   if (
     services.numberService < 3 ||
     services.foundUser.didPay ||
-    req.user.role === "admin" 
+    req.user.role === "admin"
   ) {
-    if(req.body.userID==tokenId){
-    let newRecord = await service.create(obj);
-    res.status(201).json(newRecord);
-  }
-  else{
-    res.status(404).send("you are not allowed to post here")
-  }
+    
+    if (req.body.userID == tokenId || req.user.role === "admin" ) {
+      let newRecord = await service.create(obj);
+      res.status(201).json({
+        status: "Please wait until admin confirm your service !",
+        service: newRecord,
+      });
+    } else {
+      res.status(404).send("you are not allowed to post here");
+    }
   } else {
     res.status(404).send("You should pay !!");
     // in frontend we should render payment page
   }
-
 }
 
 // Update records
@@ -84,8 +97,9 @@ async function handleUpdate(req, res) {
   const found = await service.findOne({ where: { id: ID } });
 
   if (tokenId === found.userID || (role == "admin" && found)) {
-    let updates = await found.update(newUpdate);
-    res.status(201).json(updates);
+    let updatesStatus = await found.update({status:null});
+    let updatesService = await found.update(newUpdate);
+    res.status(201).json(updatesService);
   } else {
     res.status(404).send("can't find the user !");
   }
@@ -108,7 +122,6 @@ async function handleDelete(req, res) {
   } catch (err) {
     res.status(404).send(err);
   }
-  
 }
 
 module.exports = router;
