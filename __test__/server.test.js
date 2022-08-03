@@ -15,17 +15,6 @@ let userData = {
 };
 let accessToken = null;
 
-beforeAll(async (done) => {
-  await db.sync();
-  await users.create(userData.testUser);
-  done();
-});
-
-afterAll(async (done) => {
-  await db.drop();
-  done();
-});
-
 
 describe('project jest test ', () => {
 
@@ -43,13 +32,6 @@ describe('project jest test ', () => {
     expect(response.status).toBe(200);
    
   });
-  it("test v2 getAll ", async () => {
-    const resToken = await mockRequest.post("/users/login").auth("user", "password");
-    const token = resToken.body.token;
-
-    const res = await mockRequest
-      .get("/api/v2/interactions")
-      .set("Authorization", `Bearer ${token}`);
-    expect(res.status).toBe(200);
-  });
+ 
+  
 })
