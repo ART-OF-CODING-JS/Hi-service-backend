@@ -35,7 +35,7 @@ const aboutus = require("./routers/aboutus");
 const discount = require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
 const facebook = require("./facebooklog");
-// const google=require("./google")
+const google=require("./google")
 
 const department = require("./routers/category/departments");
 const company = require("./routers/company-route");
@@ -116,7 +116,7 @@ app.use(userReservationRouter)
 app.use(reportRouter)
 app.use(reportAdminRouter)
 app.use(reportAdminRouter)
-// app.use(google)
+app.use(google)
 // // app.use('/users',authRoutes);
  app.use(stateUSServicesRouter)
 app.use("/api/v2", routerV2);

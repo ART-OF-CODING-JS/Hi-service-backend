@@ -6,7 +6,36 @@
 * users can create a service or company 
 * admin - READ/CREATE/UPDATE/DELETE
 
+## Dependencies
+* base-64
+* bcrypt
+* cors
+* dotenv
+* express
+* jest
+* jsonwebtoken
+* pg
+* supertest
+* sequelize
+* http
+* socket.io
+* socket.io-client
+* passport
+* passport-facebook
+* passport-google-oauth
+* path
+* pg
+* sequelize
+* sequelize-cli
+* sqlite3
+* stripe
+* supertest
+* socket.io
+* uuid
+* winston
 
+## our routes chart 
+![link](./image/pic.png)
 ## User Stories
 
 * we prepare user stories
