@@ -1,22 +1,10 @@
 # Hi-service
 
-## Begin Wireframes
+ ## Authorization
+* users - READ
 
-* we prepare simple wirefram for our app , from the main page until the user settings , all shown below
-
-![link](./image/1.jpeg)
-
-![link](./image/Screenshot%20(439).png)
-
-![link](./image/wire2.jpeg)
-
-![link](./image/Screenshot%20(440).png)
-
-![link](./image/Screenshot%20(441).png)
-
-![link](./image/3.jpeg)
-
-![link](./image/4.jpeg)
+* users can create a service or company 
+* admin - READ/CREATE/UPDATE/DELETE
 
 ## User Stories
 
@@ -37,6 +25,11 @@
 * we create simple model for our app that show the relationships between the functions/methods and entities
  ![link](./image/WhatsApp%20Image%202022-07-20%20at%206.24.54%20PM.jpeg)
 
+* the last model for app it is now look like 
+
+![link](./image/use_case_1.jpg)
+
+
 ## Using a Database? Make an Database Schema Diagram
 
 * we prepare our database and tables as shown in the pic
@@ -52,3 +45,7 @@
   * 3rd table will be interactions , we will save comments , rates and add to Favorite for each service
 
   * we have relation and connection between interaction , the user table and service table
+
+  * the last form fo our database and table look very cool 
+
+  ![link](./image/tables%20for%20database.png)
