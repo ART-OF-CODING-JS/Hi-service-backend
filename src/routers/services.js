@@ -65,7 +65,7 @@ async function handleCreate(req, res) {
   services = await service.paymentFunction(tokenId); // function to get number of services
 
   if (
-    services.numberService < 3 ||
+    services.numberService < 1000 ||
     services.foundUser.didPay ||
     req.user.role === "admin"
   ) {
