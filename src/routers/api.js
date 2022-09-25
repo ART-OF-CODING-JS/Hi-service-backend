@@ -57,12 +57,9 @@ async function handleGetAll(req, res) {
  // admin just can get one user
 async function handleGetOne(req, res) {
   const id = req.params.id ;
-  if((req.user.role === 'admin') ||( req.model !== dataModules.users ) ){
  let readOne = await req.model.findOne({where:{id:id}});
  res.status(200).json(readOne);
-}else{
-  res.send('You are not allowed to do this action , admin only')
-}
+
 }
 
  // Create records

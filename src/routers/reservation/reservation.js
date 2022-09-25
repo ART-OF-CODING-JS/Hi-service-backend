@@ -13,6 +13,9 @@ reservationRouter.delete("/deleteRequest/:id", bearer, handelDeleteRequest);
 reservationRouter.put("/confirm/:id", bearer, handelConfirm);
 reservationRouter.put("/reject/:id", bearer, handelReject);
 
+// for admin
+reservationRouter.get("/admin/allReservation", bearer, handleAllReservation);
+
 // send request from user
 async function handelReservation(req, res) {
   const { userID, serviceID, description, date, time } = req.body;
@@ -79,6 +82,18 @@ async function handelReject(req, res) {
   const updateStatus = await findReservation.update({ status: "reject" });
 
   res.status(201).send("You are reject reservation successfully !");
+}
+
+// admin read all reservation
+
+async function handleAllReservation(req, res) {
+  if(req.user.role === 'admin') {
+
+    const findAllReservation = await reservation.findAll();
+    res.status(201).send(findAllReservation);
+  }else {
+    res.status(404).send("Access denied");
+  }
 }
 
 module.exports = reservationRouter;
