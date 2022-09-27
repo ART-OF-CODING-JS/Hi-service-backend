@@ -84,6 +84,7 @@ const userSchema = (sequelize, DataTypes) => {
             professions: this.professions,
             role: this.role,
             companyOrUser: this.companyOrUser,
+            image:this.image
           },
           process.env.SECRET
         );
