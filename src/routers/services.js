@@ -65,7 +65,7 @@ async function handleCreate(req, res) {
   services = await service.paymentFunction(tokenId); // function to get number of services
 
   if (
-    services.numberService < 1000 ||
+    services.numberService < 3 ||
     services.foundUser.didPay ||
     req.user.role === "admin"
   ) {
@@ -80,7 +80,8 @@ async function handleCreate(req, res) {
       res.status(404).send("you are not allowed to post here");
     }
   } else {
-    res.status(404).send("You should pay !!");
+    // res.status(404).send("You should pay !!");
+    res.redirect('/payment')
     // in frontend we should render payment page
   }
 }
