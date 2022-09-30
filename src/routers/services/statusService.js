@@ -12,7 +12,7 @@ StatusRouter.put("/allServiceAdmin/:id", bearer, handleUpdateStatus);
 async function handleGetAlls(req, res) {
   console.log(req.user.role === "admin");
   if (req.user.role === "admin") {
-    let allRecords = await service.findAll();
+    let allRecords = await service.findAll({where:{status:null}});
 
     res.status(200).json(allRecords);
   }else{
