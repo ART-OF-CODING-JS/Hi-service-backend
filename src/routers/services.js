@@ -80,8 +80,8 @@ async function handleCreate(req, res) {
       res.status(404).send("you are not allowed to post here");
     }
   } else {
-    // res.status(404).send("You should pay !!");
-    res.redirect('/payment')
+  res.status(404).send("You should pay !!");
+    // res.redirect('/payment')
     // in frontend we should render payment page
   }
 }
