@@ -2,5 +2,13 @@
   "cSpell.ignoreWords": [
     "deleteprofile",
     "searchbyname"
+  ],
+  "cSpell.words": [
+    "aboutus",
+    "forgetpassword",
+    "lastnews",
+    "sendpasswordlink",
+    "updateinfo",
+    "verifytoken"
   ]
 }

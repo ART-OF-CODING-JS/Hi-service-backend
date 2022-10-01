@@ -56,12 +56,14 @@ const reportRouter = require("./routers/reports/report");
 const reportAdminRouter = require("./routers/reports/report.admin");
 
 // admin confirm The services
- const stateUSServicesRouter = require('./routers/services/statusService')
+const stateUSServicesRouter = require("./routers/services/statusService");
+
+// forgot password
+const resetPasswordRouter = require("./routers/resetpassword");
 
 //  const searchBar = require('./routers/search/search.bar')
 // const cookieParser = require('cookie-parser')
 // // Prepare the express app
-
 
 // App Level MW
 app.use(cors());
@@ -110,35 +112,36 @@ app.use(discount);
 app.use(blockRouter);
 app.use(blockAdminRouter);
 // app.use(facebook)
-app.use(reservationRouter)
-app.use(MyReservationRouter)
-app.use(userReservationRouter)
-app.use(reportRouter)
-app.use(reportAdminRouter)
-app.use(reportAdminRouter)
+app.use(reservationRouter);
+app.use(MyReservationRouter);
+app.use(userReservationRouter);
+app.use(reportRouter);
+app.use(reportAdminRouter);
+app.use(reportAdminRouter);
 // app.use(google)
 // // app.use('/users',authRoutes);
- app.use(stateUSServicesRouter)
+app.use(stateUSServicesRouter);
 app.use("/api/v2", routerV2);
 
-//////chat///
-app.use(express.static(path.join(__dirname,"public")));
-app.get('/chat', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
-  });
+app.use(resetPasswordRouter);
 
-io.on("connection", function(socket){
-	socket.on("newuser",function(username){
-		socket.broadcast.emit("update", username + " joined the conversation");
-	});
-	socket.on("exituser",function(username){
-		socket.broadcast.emit("update", username + " left the conversation");
-	});
-	socket.on("chat",function(message){
-		socket.broadcast.emit("chat", message);
-	});
+//////chat///
+app.use(express.static(path.join(__dirname, "public")));
+app.get("/chat", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
 });
 
+io.on("connection", function (socket) {
+  socket.on("newuser", function (username) {
+    socket.broadcast.emit("update", username + " joined the conversation");
+  });
+  socket.on("exituser", function (username) {
+    socket.broadcast.emit("update", username + " left the conversation");
+  });
+  socket.on("chat", function (message) {
+    socket.broadcast.emit("chat", message);
+  });
+});
 
 // // Catchalls
 app.use(logger);
