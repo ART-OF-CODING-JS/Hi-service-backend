@@ -14,7 +14,7 @@ const userSchema = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       //   allowNull: false,
-      // we can add unique
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -39,7 +39,6 @@ const userSchema = (sequelize, DataTypes) => {
     },
     professions: {
       type: DataTypes.STRING,
-      
     },
     facebookId: {
       type: DataTypes.STRING,
@@ -49,23 +48,22 @@ const userSchema = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    usersBlockList:{
-      type:DataTypes.ARRAY(DataTypes.INTEGER),
-      defaultValue:[]
+    usersBlockList: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      defaultValue: [],
+    },
+    blocked: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
 
-    },
-    blocked:{
-  type:DataTypes.BOOLEAN,
-  defaultValue:false
-    },
-   
     role: {
       type: DataTypes.ENUM("admin", "writer", "editor", "user"),
-      defaultValue:"user"
+      defaultValue: "user",
     },
     companyOrUser: {
-      type: DataTypes.ENUM('company', 'user'),
-      defaultValue:'user'
+      type: DataTypes.ENUM("company", "user"),
+      defaultValue: "user",
     },
     token: {
       type: DataTypes.VIRTUAL,
@@ -84,7 +82,7 @@ const userSchema = (sequelize, DataTypes) => {
             professions: this.professions,
             role: this.role,
             companyOrUser: this.companyOrUser,
-            image:this.image
+            image: this.image,
           },
           process.env.SECRET
         );
@@ -134,7 +132,7 @@ const userSchema = (sequelize, DataTypes) => {
   model.authenticateToken = async function (token) {
     try {
       const verifyToken = jwt.verify(token, process.env.SECRET);
- 
+
       const user = await this.findOne({
         where: {
           username: verifyToken.username,

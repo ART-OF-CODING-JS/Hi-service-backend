@@ -16,25 +16,21 @@ resetPasswordRouter.post("/sendpasswordlink", sendPasswordLink);
 
 // in login page there is a button call (forget my password) to reset password .
 async function resetpassword(req, res, next) {
-  userId = parseInt(req.params.id);
   const { username, newPassword, email } = req.body;
   try {
     const foundUser = await users.findOne({ where: { username: username } });
+    console.log(foundUser.id);
 
     if (foundUser) {
-      if (foundUser.id === userId) {
-        if (email === foundUser.email) {
-          const password = await bcrypt.hash(newPassword, 10);
-          let updates = await foundUser.update({
-            password: password,
-          });
-          res.send("The password updated successfully !");
-          next();
-        } else {
-          res.send("The email it is not correct!");
-        }
+      if (email === foundUser.email) {
+        const password = await bcrypt.hash(newPassword, 10);
+        let updates = await foundUser.update({
+          password: password,
+        });
+        res.send("The password updated successfully !");
+        next();
       } else {
-        res.send("You are not Authenticate to change Password");
+        res.send("The email it is not correct!");
       }
     } else {
       res.send("The username is not correct !");
@@ -55,22 +51,23 @@ async function sendPasswordLink(req, res) {
 
   try {
     const findUser = await users.findOne({ email: email });
+    console.log(findUser.id);
     const token = jwt.sign({ id: findUser.id, email }, process.env.SECRET, { expiresIn: "5m" });
-
+    console.log(findUser.id);
     const payload = {
       id: findUser.id,
       verifytoken: token,
       new: true,
     };
 
-    const link = `http://localhost:3000/forgotpassword/${payload.id}/${payload.verifytoken}`;
+    const link = `http://localhost:3000/resetpassword/${payload.id}/${payload.verifytoken}`;
 
     if (payload) {
       const mailInfo = {
         from: "hi-service-js@outlook.com", // sender address
         to: email,
         subject: "Sending Email For password Reset",
-        text: `This Link Valid For 3 MINUTES[${link}]`,
+        text: `This Link Valid For 3 MINUTES[  ${link}  ]`,
       };
 
       let transporter = nodemailer.createTransport({
