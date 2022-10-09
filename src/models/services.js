@@ -51,18 +51,17 @@ const services = (sequelize, DataTypes) => {
   // search by title
   model.searchService = async function (searchTerm) {
     const users = await model.findAll({
-      where: {
-        title: { [Op.like]: "%" + searchTerm + "%" },
-      },
+      where: 
+      [  {title: { [Op.like]: "%" + searchTerm + "%" }},{status: "confirm"}],
+   
     });
 
     return users;
   };
   model.searchCity = async function (searchCity) {
     const search = await model.findAll({
-      where: {
-        city: { [Op.like]: "%" + searchCity + "%" },
-      },
+      where:
+    [   { city: { [Op.like]: "%" + searchCity + "%" }},{status: "confirm" }]
     });
 
     return search;
