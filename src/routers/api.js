@@ -42,27 +42,20 @@ routerV2.put('/:model/:id', bearer, handleUpdate);
 routerV2.delete('/:model/:id',bearer,  handleDelete);
 
  // Get All Records
-// just admin can get all users
+// can get all users
 async function handleGetAll(req, res) {
   // const knexInstance = req.app.get("db");
-  if((req.user.role === 'admin') ||( req.model !== dataModules.users )){
     let allRecords = await req.model.findAll();
     res.status(200).json(allRecords);
-  }else{
-    res.send('Access denied')
-  }
 };
 
  // Get one Records
- // admin just can get one user
+ //any one can get one user
 async function handleGetOne(req, res) {
   const id = req.params.id ;
-  if((req.user.role === 'admin') ||( req.model !== dataModules.users ) ){
  let readOne = await req.model.findOne({where:{id:id}});
  res.status(200).json(readOne);
-}else{
-  res.send('You are not allowed to do this action , admin only')
-}
+
 }
 
  // Create records

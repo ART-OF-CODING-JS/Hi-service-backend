@@ -72,7 +72,19 @@ const userSchema = (sequelize, DataTypes) => {
       get() {
         return jwt.sign(
           {
+            id: this.id,
             username: this.username,
+            email: this.email,
+            gender: this.gender,
+            city: this.city,
+            didPay: this.didPay,
+            phoneNumber: this.phoneNumber,
+            usersBlockList: this.usersBlockList,
+            blocked: this.blocked,
+            professions: this.professions,
+            role: this.role,
+            companyOrUser: this.companyOrUser,
+            image:this.image
           },
           process.env.SECRET
         );
@@ -112,7 +124,6 @@ const userSchema = (sequelize, DataTypes) => {
     });
 
     const valid = await bcrypt.compare(password, user.password);
-    // console.log("passsssssss",password,user.password);
     if (valid) {
       return user;
     }
@@ -122,11 +133,11 @@ const userSchema = (sequelize, DataTypes) => {
   // Bearer
   model.authenticateToken = async function (token) {
     try {
-      const parsedToken = jwt.verify(token, process.env.SECRET);
-      let y = parsedToken.username;
+      const verifyToken = jwt.verify(token, process.env.SECRET);
+ 
       const user = await this.findOne({
         where: {
-          username: parsedToken.username,
+          username: verifyToken.username,
         },
       });
       if (user) {

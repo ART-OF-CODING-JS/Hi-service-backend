@@ -10,11 +10,12 @@ const loger = require('../logger')
 authRouter.post('/signup', async (req, res) => {
   
   try {
-    const { role,email, username, city, gender, birthday, phoneNumber, professions, password, companyOrUser } =req.body
+    const { role,email, username, city, gender, birthday, phoneNumber, professions, password, companyOrUser,image } =req.body
     const passwordhash = await bcrypt.hash(password, 10);
-
     // add email
-    const record = await users.create({ username: username, password: passwordhash, role: role, companyOrUser: companyOrUser, email: email, city: city, gender: gender, birthday: birthday, phoneNumber: phoneNumber, professions: professions });
+    const record = await users.create({ username: username, password: passwordhash, role: role, companyOrUser: companyOrUser, email: email, city: city,
+       gender: gender, birthday: birthday
+       , phoneNumber: phoneNumber, professions: professions ,image:image});
     
     loger.info(record.username+" "+"signup", {timestamp: new Date().toString(),})
 
