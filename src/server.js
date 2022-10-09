@@ -13,7 +13,12 @@ const app = express();
 
 const server = require("http").createServer(app);
 
-const io = require("socket.io")(server);
+const io = require("socket.io")(server,{
+  cors: {
+    origin: ["http://localhost:3000","https://hiservice.herokuapp.com"],
+    methods: ["GET", "POST"],
+  },
+});
 // facebook login require
 // // Esoteric Resources
 const logger = require("./middleware/logger");
@@ -34,8 +39,8 @@ const lastnews = require("./routers/lastNewServices");
 const aboutus = require("./routers/aboutus");
 const discount = require("./routers/discountServices");
 const deleteProfileRouter = require("./routers/deleteProfile");
-const facebook = require("./facebooklog");
-const google=require("./google")
+// const facebook = require("./facebooklog");
+// const google=require("./google")
 
 const department = require("./routers/category/departments");
 const company = require("./routers/company-route");
@@ -109,14 +114,14 @@ app.use(aboutus);
 app.use(discount);
 app.use(blockRouter);
 app.use(blockAdminRouter);
-app.use(facebook)
+// app.use(facebook)
 app.use(reservationRouter)
 app.use(MyReservationRouter)
 app.use(userReservationRouter)
 app.use(reportRouter)
 app.use(reportAdminRouter)
 app.use(reportAdminRouter)
-app.use(google)
+// app.use(google)
 // // app.use('/users',authRoutes);
  app.use(stateUSServicesRouter)
 app.use("/api/v2", routerV2);
@@ -128,15 +133,27 @@ app.get('/chat', (req, res) => {
   });
 
 io.on("connection", function(socket){
-	socket.on("newuser",function(username){
-		socket.broadcast.emit("update", username + " joined the conversation");
-	});
-	socket.on("exituser",function(username){
-		socket.broadcast.emit("update", username + " left the conversation");
-	});
-	socket.on("chat",function(message){
-		socket.broadcast.emit("chat", message);
-	});
+	// socket.on("newuser",function(username){
+	// 	socket.broadcast.emit("update", username + " joined the conversation");
+	// });
+	// socket.on("exituser",function(username){
+	// 	socket.broadcast.emit("update", username + " left the conversation");
+	// });
+	// socket.on("chat",function(message){
+	// 	socket.broadcast.emit("chat", message);
+	// });
+  // socket.on("join_room", (id) => {
+  //   console.log(id,"11111111")
+  //   socket.join(id);
+  // });
+socket.on("send_message",(data)=>{
+  console.log(data,"0000")
+  socket.broadcast.emit("received_message",data)
+})
+
+
+
+
 });
 
 
