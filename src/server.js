@@ -13,7 +13,12 @@ const app = express();
 
 const server = require("http").createServer(app);
 
-const io = require("socket.io")(server);
+const io = require("socket.io")(server,{
+  cors: {
+    origin: ["http://localhost:3000","https://hiservice.herokuapp.com"],
+    methods: ["GET", "POST"],
+  },
+});
 // facebook login require
 // // Esoteric Resources
 const logger = require("./middleware/logger");
@@ -128,15 +133,27 @@ app.get('/chat', (req, res) => {
   });
 
 io.on("connection", function(socket){
-	socket.on("newuser",function(username){
-		socket.broadcast.emit("update", username + " joined the conversation");
-	});
-	socket.on("exituser",function(username){
-		socket.broadcast.emit("update", username + " left the conversation");
-	});
-	socket.on("chat",function(message){
-		socket.broadcast.emit("chat", message);
-	});
+	// socket.on("newuser",function(username){
+	// 	socket.broadcast.emit("update", username + " joined the conversation");
+	// });
+	// socket.on("exituser",function(username){
+	// 	socket.broadcast.emit("update", username + " left the conversation");
+	// });
+	// socket.on("chat",function(message){
+	// 	socket.broadcast.emit("chat", message);
+	// });
+  // socket.on("join_room", (id) => {
+  //   console.log(id,"11111111")
+  //   socket.join(id);
+  // });
+socket.on("send_message",(data)=>{
+  console.log(data,"0000")
+  socket.broadcast.emit("received_message",data)
+})
+
+
+
+
 });
 
 
